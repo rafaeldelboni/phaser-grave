@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var CleanWebpackPlugin = require('clean-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var CopyWebpackPlugin = require('copy-webpack-plugin')
+var SpritesmithPlugin = require('webpack-spritesmith')
 
 // Phaser webpack config
 var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/')
@@ -39,7 +40,12 @@ module.exports = {
         comments: false
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' /* chunkName= */ , filename: 'js/vendor.bundle.js' /* filename= */ }),
+    new webpack.optimize.CommonsChunkPlugin(
+      {
+        name: 'vendor' /* chunkName= */,
+        filename: 'js/vendor.bundle.js' /* filename= */
+      }
+    ),
     new HtmlWebpackPlugin({
       filename: 'index.html', // path.resolve(__dirname, 'build', 'index.html'),
       template: './src/index.html',
@@ -57,16 +63,44 @@ module.exports = {
       },
       hash: true
     }),
-    new CopyWebpackPlugin([
-      { from: 'assets', to: 'assets' }
-    ])
+    new CopyWebpackPlugin(
+      [ { from: 'assets', to: 'assets', ignore: [ 'sprites/**/*' ] } ]
+    ),
+    new SpritesmithPlugin({
+      src: {
+        cwd: path.resolve(__dirname, 'assets/sprites'),
+        glob: '**/*.png'
+      },
+      target: {
+        image: path.resolve(__dirname, 'build/assets/atlas.png'),
+        css: [[path.resolve(__dirname, 'build/assets/atlas.json'), {
+          format: 'json_texture'
+        }]]
+      },
+      spritesmithOptions: {
+        padding: 2
+      }
+    })
   ],
   module: {
     rules: [
       { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
       { test: /pixi\.js/, use: ['expose-loader?PIXI'] },
       { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
-      { test: /p2\.js/, use: ['expose-loader?p2'] }
+      { test: /p2\.js/, use: ['expose-loader?p2'] },
+      {
+        test: /\.(png|json)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'assets/',
+              emitFile: false
+            }
+          }
+        ]
+      }
     ]
   },
   node: {
@@ -78,7 +112,8 @@ module.exports = {
     alias: {
       'phaser': phaser,
       'pixi': pixi,
-      'p2': p2
+      'p2': p2,
+      'assets': path.resolve(__dirname, 'build/assets')
     }
   }
 }
