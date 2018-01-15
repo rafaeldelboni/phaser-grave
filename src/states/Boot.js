@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import WebFont from 'webfontloader'
+import config from '../config'
 
 export default class extends Phaser.State {
   init () {
@@ -9,6 +10,9 @@ export default class extends Phaser.State {
   }
 
   preload () {
+    this.scaleGameCentralize()
+    this.pixelCrispScaleRender()
+
     WebFont.load({
       google: {
         families: ['Bangers']
@@ -36,5 +40,21 @@ export default class extends Phaser.State {
 
   fontsLoaded () {
     this.fontsReady = true
+  }
+
+  scaleGameCentralize () {
+    this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
+    this.game.scale.setResizeCallback(() => {
+      const docElement = document.documentElement
+      this.game.scale.setMinMax(config.width, config.width, docElement.clientWidth, docElement.clientHeight)
+    })
+    this.game.scale.forceLandscape = true
+    this.game.scale.pageAlignHorizontally = true
+    this.game.scale.pageAlignVertically = true
+  }
+
+  pixelCrispScaleRender () {
+    this.game.renderer.renderSession.roundPixels = true
+    Phaser.Canvas.setImageRenderingCrisp(this.game.canvas)
   }
 }

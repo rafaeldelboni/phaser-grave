@@ -28,8 +28,16 @@ export default class extends Phaser.State {
       y: this.world.centerY,
       asset: 'mushroom'
     })
-
     this.game.add.existing(this.mushroom)
+
+    this.skeleton = new Phaser.Sprite(
+      this.game,
+      this.world.centerX + 16,
+      this.world.centerY + 16,
+      'atlas',
+      'skeleton_idle_0'
+    )
+    this.game.add.existing(this.skeleton)
   }
 
   render () {

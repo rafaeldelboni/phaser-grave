@@ -59,7 +59,7 @@ module.exports = {
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
       server: {
-        baseDir: ['./', './build']
+        baseDir: ['./', './dist']
       }
     }),
     new SpritesmithPlugin({
