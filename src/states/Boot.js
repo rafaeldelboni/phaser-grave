@@ -44,13 +44,19 @@ export default class extends Phaser.State {
 
   scaleGameCentralize () {
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL
-    this.game.scale.setResizeCallback(() => {
-      const docElement = document.documentElement
-      this.game.scale.setMinMax(config.width, config.width, docElement.clientWidth, docElement.clientHeight)
-    })
     this.game.scale.forceLandscape = true
     this.game.scale.pageAlignHorizontally = true
     this.game.scale.pageAlignVertically = true
+
+    this.game.scale.setResizeCallback(() => {
+      const docElement = document.documentElement
+      this.game.scale.setMinMax(
+        config.width,
+        config.height,
+        docElement.clientWidth,
+        docElement.clientHeight
+      )
+    })
   }
 
   pixelCrispScaleRender () {

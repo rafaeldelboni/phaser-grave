@@ -1,5 +1,11 @@
+/* global __DEV__:false */
+import Phaser from 'phaser'
+
 export default {
-  gameWidth: 320,
-  gameHeight: 180,
+  isDevelopment: __DEV__,
+  width: 320,
+  height: 180,
+  renderer: Phaser.CANVAS,
+  parent: 'content',
   localStorageName: 'phasergrave'
 }
