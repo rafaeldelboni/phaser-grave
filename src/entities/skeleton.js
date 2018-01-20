@@ -10,6 +10,6 @@ export default class Skeleton extends Actor {
       { name: 'run', start: 0, stop: 5, speed: 8, loop: true },
       { name: 'roll', start: 0, stop: 6, speed: 8, loop: true }
     ])
-    this.sprite.animations.play('run')
+    this.sprite.animations.play('idle')
   }
 }
