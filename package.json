@@ -5,9 +5,11 @@
   "author": "leandro cabrera <leandcabrera@gmail.com>",
   "main": "index.js",
   "scripts": {
+    "precommit": "lint-staged",
+    "prepush": "yarn lint",
     "dev": "webpack",
     "build": "webpack --config webpack.production.config.js",
-    "test": "eslint './src/**/*.js'"
+    "lint": "eslint './src/**/*.js'"
   },
   "license": "MIT",
   "devDependencies": {

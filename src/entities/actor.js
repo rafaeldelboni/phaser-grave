@@ -5,20 +5,8 @@ export default class Actor {
     this.weight = 1
   }
 
-  get sprite () {
-    return this.sprite
-  }
-
   get maxHealth () {
     return this.sprite.maxHealth
-  }
-
-  get weight () {
-    return this.weight
-  }
-
-  set weight (value) {
-    this.weight = value
   }
 
   update () {

@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
+import Skeleton from '../entities/skeleton'
 
 export default class extends Phaser.State {
   init () {}
@@ -30,14 +31,15 @@ export default class extends Phaser.State {
     })
     this.game.add.existing(this.mushroom)
 
-    this.skeleton = new Phaser.Sprite(
+    this.skeleton = new Skeleton(
       this.game,
-      this.world.centerX + 16,
-      this.world.centerY + 16,
-      'atlas',
-      'skeleton_idle_0'
+      this.game.add.sprite(
+        this.world.centerX + 16,
+        this.world.centerY + 16,
+        'atlas',
+        ''
+      )
     )
-    this.game.add.existing(this.skeleton)
   }
 
   render () {
