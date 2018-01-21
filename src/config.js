@@ -1,4 +1,4 @@
-/* global __DEV__:false */
+/* globals __DEV__ */
 import Phaser from 'phaser'
 
 export default {

@@ -1,4 +1,3 @@
-/* globals __DEV__ */
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
 import Skeleton from '../entities/skeleton'
@@ -43,7 +42,8 @@ export default class extends Phaser.State {
   }
 
   render () {
-    if (__DEV__) {
+    this.skeleton.render()
+    if (this.game.config.isDevelopment) {
       this.game.debug.spriteInfo(this.mushroom, 32, 32)
     }
   }
