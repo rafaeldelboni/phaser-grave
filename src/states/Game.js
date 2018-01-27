@@ -41,6 +41,10 @@ export default class extends Phaser.State {
     )
   }
 
+  update () {
+    this.skeleton.update()
+  }
+
   render () {
     this.skeleton.render()
     if (this.game.config.isDevelopment) {
