@@ -4,7 +4,7 @@ import config from '../config'
 
 export default class extends Phaser.State {
   init () {
-    this.stage.backgroundColor = '#EDEEC9'
+    this.stage.backgroundColor = '#c0c0c0'
     this.fontsReady = false
     this.fontsLoaded = this.fontsLoaded.bind(this)
   }
@@ -51,8 +51,8 @@ export default class extends Phaser.State {
     this.game.scale.forceLandscape = true
     this.game.scale.pageAlignHorizontally = true
     this.game.scale.pageAlignVertically = true
-
-    this.game.scale.setResizeCallback(() => {
+    this.game.scale.setMinMax(config.width, config.height, 960, 540)
+    /* this.game.scale.setResizeCallback(() => {
       const docElement = document.documentElement
       this.game.scale.setMinMax(
         config.width,
@@ -60,7 +60,7 @@ export default class extends Phaser.State {
         docElement.clientWidth,
         docElement.clientHeight
       )
-    })
+    }) */
   }
 
   pixelCrispScaleRender () {

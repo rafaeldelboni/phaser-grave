@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 export default class Controls {
-  constructor (game) {
-    this.game = game
+  constructor (actor) {
+    this.game = actor.game
     this.keys = {
       left: [
         this.game.input.keyboard.addKey(Phaser.Keyboard.A),
@@ -20,7 +20,7 @@ export default class Controls {
       roll: [
         this.game.input.keyboard.addKey(Phaser.Keyboard.J),
         this.game.input.keyboard.addKey(Phaser.Keyboard.P),
-        this.game.input.keyboard.addKey(Phaser.Keyboard.SPACE)
+        this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
       ]
     }
   }

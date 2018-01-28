@@ -7,8 +7,8 @@ const attributes = {
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
-    { name: 'run', start: 0, stop: 5, speed: 8, loop: true },
-    { name: 'roll', start: 0, stop: 6, speed: 8, loop: true },
+    { name: 'run', start: 0, stop: 5, speed: 9, loop: true },
+    { name: 'roll', start: 0, stop: 6, speed: 12, loop: false },
     { name: 'attack_one', start: 0, stop: 4, speed: 8, loop: false },
     { name: 'attack_two', start: 0, stop: 4, speed: 8, loop: false },
     { name: 'attack_three', start: 0, stop: 5, speed: 8, loop: false }
@@ -16,12 +16,17 @@ const attributes = {
   speed: 100,
   attackOne: {
     coolDown: 500
+  },
+  roll: {
+    coolDown: 600
   }
 }
 
-const state = {
-  moving: false,
-  attacking: false
+const State = {
+  IDLE: 1,
+  RUN: 2,
+  ATTACK: 3,
+  ROLL: 4
 }
 
 export default class Skeleton extends Actor {
@@ -38,10 +43,11 @@ export default class Skeleton extends Actor {
 
     this.setupBody()
 
-    this.controls = new Controls(game)
+    this.controls = new Controls(this)
 
     this.sprite.anchor.setTo(0.5)
-    this.sprite.animations.play('run')
+    this.sprite.animations.play('idle')
+    this.state = State.IDLE
     super.faceRight()
   }
 
@@ -81,34 +87,71 @@ export default class Skeleton extends Actor {
     this.hitboxes = hitboxes
   }
 
+  run () {
+    if (this.controls.left && !this.controls.right) {
+      this.state = State.RUN
+      super.faceLeft()
+      this.sprite.animations.play('run')
+      this.sprite.body.velocity.x = -attributes.speed
+    } else if (this.controls.right && !this.controls.left) {
+      this.state = State.RUN
+      super.faceRight()
+      this.sprite.animations.play('run')
+      this.sprite.body.velocity.x = attributes.speed
+    } else {
+      this.state = State.IDLE
+      this.sprite.body.velocity.x = 0
+      this.sprite.animations.play('idle')
+    }
+  }
+
+  attack () {
+    if (this.controls.attack) {
+      this.state = State.ATTACK
+      this.sprite.animations.play('attack_one')
+      this.sprite.body.velocity.x = 0
+      this.game.time.events.add(attributes.attackOne.coolDown, () => {
+        this.state = State.IDLE
+      })
+    }
+  }
+
+  roll () {
+    if (this.controls.roll) {
+      this.sprite.anchor.setTo(0.25, 0.5)
+      this.state = State.ROLL
+      this.sprite.animations.play('roll')
+      this.sprite.body.velocity.x = 180 * this.sprite.scale.x
+      this.game.time.events.add(attributes.roll.coolDown, () => {
+        this.sprite.anchor.setTo(0.5)
+        this.state = State.IDLE
+      })
+    }
+  }
+
+  handleStates () {
+    switch (this.state) {
+      default:
+      case State.IDLE:
+        this.run()
+        this.attack()
+        this.roll()
+        break
+      case State.RUN:
+        this.run()
+        this.attack()
+        this.roll()
+        break
+      case State.ATTACK:
+        this.attack()
+        break
+      case State.ROLL:
+        break
+    }
+  }
+
   update () {
-    if (!state.attacking) {
-      if (this.controls.attack) {
-        state.attacking = true
-        this.sprite.animations.play('attack_one')
-        this.sprite.body.velocity.x = 0
-        this.game.time.events.add(attributes.attackOne.coolDown, () => {
-          state.attacking = false
-        })
-      }
-    }
-    if (!state.attacking) {
-      if (this.controls.left && !this.controls.right) {
-        state.moving = true
-        super.faceLeft()
-        this.sprite.animations.play('run')
-        this.sprite.body.velocity.x = -attributes.speed
-      } else if (this.controls.right && !this.controls.left) {
-        state.moving = true
-        super.faceRight()
-        this.sprite.animations.play('run')
-        this.sprite.body.velocity.x = attributes.speed
-      } else {
-        state.moving = false
-        this.sprite.body.velocity.x = 0
-        this.sprite.animations.play('idle')
-      }
-    }
+    this.handleStates()
   }
 
   render () {

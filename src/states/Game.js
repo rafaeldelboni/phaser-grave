@@ -1,40 +1,45 @@
 import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
 import Skeleton from '../entities/skeleton'
 
 export default class extends Phaser.State {
   init () {}
   preload () {}
 
+  setBackground () {
+    this.background = this.game.add.group(this.world, 'background')
+
+    const clouds = this.game.add.sprite(0, 0, 'atlas', 'bg_clouds')
+    clouds.tint = Phaser.Color.hexToRGB('#d2d2d2')
+    this.background.add(clouds)
+
+    const firstLayerBg = this.game.add.sprite(0, 0, 'atlas', 'bg_graves')
+    firstLayerBg.tint = Phaser.Color.hexToRGB('#8c8c8c')
+    this.background.add(firstLayerBg)
+
+    const secondLayerBg = this.game.add.sprite(0, 16, 'atlas', 'bg_graves')
+    secondLayerBg.tint = Phaser.Color.hexToRGB('#787878')
+    this.background.add(secondLayerBg)
+
+    const thirdLayerBg = this.game.add.sprite(0, 38, 'atlas', 'bg_graves')
+    thirdLayerBg.tint = Phaser.Color.hexToRGB('#646464')
+    this.background.add(thirdLayerBg)
+
+    for (let i = 0; i <= 320; i += 32) {
+      this.background.create(i, 116, 'atlas', 'bg_grass')
+      this.background.create(i, 148, 'atlas', 'wall_0')
+    }
+
+    this.background.sort('y', Phaser.Group.SORT_ASCENDING)
+  }
+
   create () {
-    const bannerText = 'Phaser + ES6 + Webpack'
-    let banner = this.add.text(
-      this.world.centerX,
-      this.game.height - 80,
-      bannerText,
-      {
-        font: '40px Bangers',
-        fill: '#77BFA3',
-        smoothed: false
-      }
-    )
-
-    banner.padding.set(10, 16)
-    banner.anchor.setTo(0.5)
-
-    this.mushroom = new Mushroom({
-      game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      asset: 'mushroom'
-    })
-    this.game.add.existing(this.mushroom)
+    this.setBackground()
 
     this.skeleton = new Skeleton(
       this.game,
       this.game.add.sprite(
-        this.world.centerX + 16,
-        this.world.centerY + 16,
+        this.world.centerX - 25,
+        this.world.centerY + 33,
         'atlas',
         ''
       )
@@ -48,7 +53,7 @@ export default class extends Phaser.State {
   render () {
     this.skeleton.render()
     if (this.game.config.isDevelopment) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
+      this.game.debug.spriteInfo(this.skeleton.sprite, 32, 32)
     }
   }
 }
