@@ -9,24 +9,29 @@ const attributes = {
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
     { name: 'run', start: 0, stop: 5, speed: 9, loop: true },
     { name: 'roll', start: 0, stop: 6, speed: 12, loop: false },
-    { name: 'attack_one', start: 0, stop: 4, speed: 8, loop: false },
-    { name: 'attack_two', start: 0, stop: 4, speed: 8, loop: false },
-    { name: 'attack_three', start: 0, stop: 5, speed: 8, loop: false }
+    { name: 'attack_one', start: 0, stop: 4, speed: 6, loop: false },
+    { name: 'attack_two', start: 0, stop: 4, speed: 6, loop: false },
+    { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false }
   ],
   speed: 100,
   attack: {
     one: {
-      coolDown: 500
+      name: 'attack_one',
+      comboTime: 450,
+      duration: 500
     },
     two: {
-      coolDown: 500
+      name: 'attack_two',
+      comboTime: 600,
+      duration: 750
     },
     three: {
-      coolDown: 500
+      name: 'attack_three',
+      duration: 600
     }
   },
   roll: {
-    coolDown: 600
+    duration: 600
   }
 }
 
@@ -48,6 +53,10 @@ export default class Skeleton extends Actor {
       this.sprite.animations,
       attributes.animations
     )
+    this.comboAttack = {
+      current: null,
+      next: attributes.attack.one
+    }
 
     this.setupBody()
 
@@ -113,14 +122,47 @@ export default class Skeleton extends Actor {
     }
   }
 
+  // TODO very buggy, need to trigger one time only not on each update loop
+  setAttack (current, next) {
+    if (this.comboAttack.next === current) {
+      this.comboAttack.current = current
+      console.log('current', this.comboAttack.current.name)
+      this.sprite.animations.play(current.name)
+
+      if (next) {
+        this.game.time.events.add(this.comboAttack.current.comboTime, () => {
+          this.comboAttack.next = next
+          console.log('next', this.comboAttack.next.name)
+        })
+      }
+
+      this.game.time.events.add(this.comboAttack.current.duration, () => {
+        if (this.comboAttack.current === current) {
+          this.comboAttack.next = attributes.attack.one
+          this.comboAttack.current = null
+          this.state = State.IDLE
+          console.log('reset', this.comboAttack.next.name)
+        }
+      })
+    }
+  }
+
   attack () {
     if (this.controls.attack) {
       this.state = State.ATTACK
       this.sprite.body.velocity.x = 0
-      this.sprite.animations.play('attack_one')
-      this.game.time.events.add(attributes.attack.one.coolDown, () => {
-        this.state = State.IDLE
-      })
+      switch (this.comboAttack.next) {
+        default:
+        case attributes.attack.one:
+          this.setAttack(attributes.attack.one, attributes.attack.two)
+          break
+        case attributes.attack.two:
+          this.setAttack(attributes.attack.two, attributes.attack.three)
+          break
+        case attributes.attack.three:
+          this.setAttack(attributes.attack.three)
+          break
+      }
     }
   }
 
@@ -130,7 +172,7 @@ export default class Skeleton extends Actor {
       this.state = State.ROLL
       this.sprite.animations.play('roll')
       this.sprite.body.velocity.x = 180 * this.sprite.scale.x
-      this.game.time.events.add(attributes.roll.coolDown, () => {
+      this.game.time.events.add(attributes.roll.duration, () => {
         this.sprite.anchor.setTo(0.5)
         this.state = State.IDLE
       })
