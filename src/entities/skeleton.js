@@ -14,8 +14,16 @@ const attributes = {
     { name: 'attack_three', start: 0, stop: 5, speed: 8, loop: false }
   ],
   speed: 100,
-  attackOne: {
-    coolDown: 500
+  attack: {
+    one: {
+      coolDown: 500
+    },
+    two: {
+      coolDown: 500
+    },
+    three: {
+      coolDown: 500
+    }
   },
   roll: {
     coolDown: 600
@@ -108,9 +116,9 @@ export default class Skeleton extends Actor {
   attack () {
     if (this.controls.attack) {
       this.state = State.ATTACK
-      this.sprite.animations.play('attack_one')
       this.sprite.body.velocity.x = 0
-      this.game.time.events.add(attributes.attackOne.coolDown, () => {
+      this.sprite.animations.play('attack_one')
+      this.game.time.events.add(attributes.attack.one.coolDown, () => {
         this.state = State.IDLE
       })
     }
