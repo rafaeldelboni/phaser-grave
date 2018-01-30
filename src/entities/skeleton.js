@@ -13,33 +13,41 @@ const attributes = {
     { name: 'attack_two', start: 0, stop: 4, speed: 6, loop: false },
     { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false }
   ],
-  speed: 100,
-  attack: {
-    one: {
-      name: 'attack_one',
-      comboTime: 450,
-      duration: 500
-    },
-    two: {
-      name: 'attack_two',
-      comboTime: 600,
-      duration: 750
-    },
-    three: {
-      name: 'attack_three',
-      duration: 600
-    }
+  speed: 100
+}
+
+const attacks = {
+  one: {
+    name: 'attack_one',
+    combo: 30,
+    duration: 35,
+    coolDown: 5
   },
-  roll: {
-    duration: 600
+  two: {
+    name: 'attack_two',
+    combo: 35,
+    duration: 45,
+    coolDown: 5
+  },
+  three: {
+    name: 'attack_three',
+    duration: 35,
+    coolDown: 5
   }
 }
 
 const State = {
-  IDLE: 1,
-  RUN: 2,
-  ATTACK: 3,
-  ROLL: 4
+  IDLE: { id: 1, time: 0 },
+  RUN: { id: 2, time: 0 },
+  ATTACK: {
+    id: 3,
+    time: 0,
+    name: attacks.one.name,
+    duration: attacks.one.duration,
+    combo: attacks.one.combo,
+    coolDown: attacks.one.coolDown
+  },
+  ROLL: { id: 4, time: 0, duration: 36 }
 }
 
 export default class Skeleton extends Actor {
@@ -53,18 +61,13 @@ export default class Skeleton extends Actor {
       this.sprite.animations,
       attributes.animations
     )
-    this.comboAttack = {
-      current: null,
-      next: attributes.attack.one
-    }
-
     this.setupBody()
 
     this.controls = new Controls(this)
 
     this.sprite.anchor.setTo(0.5)
     this.sprite.animations.play('idle')
-    this.state = State.IDLE
+    this.setState(State.IDLE)
     super.faceRight()
   }
 
@@ -106,61 +109,51 @@ export default class Skeleton extends Actor {
 
   run () {
     if (this.controls.left && !this.controls.right) {
-      this.state = State.RUN
+      this.setState(State.RUN)
       super.faceLeft()
       this.sprite.animations.play('run')
       this.sprite.body.velocity.x = -attributes.speed
     } else if (this.controls.right && !this.controls.left) {
-      this.state = State.RUN
+      this.setState(State.RUN)
       super.faceRight()
       this.sprite.animations.play('run')
       this.sprite.body.velocity.x = attributes.speed
     } else {
-      this.state = State.IDLE
+      this.setState(State.IDLE)
       this.sprite.body.velocity.x = 0
       this.sprite.animations.play('idle')
     }
   }
 
-  // TODO very buggy, need to trigger one time only not on each update loop
-  setAttack (current, next) {
-    if (this.comboAttack.next === current) {
-      this.comboAttack.current = current
-      console.log('current', this.comboAttack.current.name)
+  setAttackState (current, next) {
+    if (this.state !== State.ATTACK) {
+      this.setState(State.ATTACK)
+      this.state.name = current.name
+      this.state.combo = current.combo
+      this.state.duration = current.duration
       this.sprite.animations.play(current.name)
-
-      if (next) {
-        this.game.time.events.add(this.comboAttack.current.comboTime, () => {
-          this.comboAttack.next = next
-          console.log('next', this.comboAttack.next.name)
-        })
-      }
-
-      this.game.time.events.add(this.comboAttack.current.duration, () => {
-        if (this.comboAttack.current === current) {
-          this.comboAttack.next = attributes.attack.one
-          this.comboAttack.current = null
-          this.state = State.IDLE
-          console.log('reset', this.comboAttack.next.name)
-        }
-      })
+    } else if (next && this.state.time >= this.state.combo) {
+      this.state.time = 0
+      this.state.name = next.name
+      this.state.combo = next.combo
+      this.state.duration = next.duration
+      this.sprite.animations.play(next.name)
     }
   }
 
   attack () {
     if (this.controls.attack) {
-      this.state = State.ATTACK
       this.sprite.body.velocity.x = 0
-      switch (this.comboAttack.next) {
+      switch (this.state.name) {
         default:
-        case attributes.attack.one:
-          this.setAttack(attributes.attack.one, attributes.attack.two)
+        case attacks.one.name:
+          this.setAttackState(attacks.one, attacks.two)
           break
-        case attributes.attack.two:
-          this.setAttack(attributes.attack.two, attributes.attack.three)
+        case attacks.two.name:
+          this.setAttackState(attacks.two, attacks.three)
           break
-        case attributes.attack.three:
-          this.setAttack(attributes.attack.three)
+        case attacks.three.name:
+          this.setAttackState(attacks.three)
           break
       }
     }
@@ -169,17 +162,25 @@ export default class Skeleton extends Actor {
   roll () {
     if (this.controls.roll) {
       this.sprite.anchor.setTo(0.25, 0.5)
-      this.state = State.ROLL
+      this.setState(State.ROLL)
       this.sprite.animations.play('roll')
       this.sprite.body.velocity.x = 180 * this.sprite.scale.x
-      this.game.time.events.add(attributes.roll.duration, () => {
-        this.sprite.anchor.setTo(0.5)
-        this.state = State.IDLE
-      })
     }
   }
 
+  setState (state) {
+    if (this.state) {
+      this.state.time = 0
+    }
+    this.state = state
+  }
+
   handleStates () {
+    this.state.time++
+    if (this.state.duration <= this.state.time) {
+      this.setState(State.IDLE)
+    }
+
     switch (this.state) {
       default:
       case State.IDLE:
