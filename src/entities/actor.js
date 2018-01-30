@@ -1,12 +1,22 @@
 export default class Actor {
   constructor (game, sprite) {
     this.game = game
-    this.sprite = sprite
     this.weight = 1
+    this.sprite = sprite
+    this.game.physics.arcade.enable(this.sprite)
   }
 
-  get maxHealth () {
-    return this.sprite.maxHealth
+  playAnimation (animationName) {
+    return this.sprite.animations.play(animationName)
+  }
+
+  setVelocity (x, y) {
+    if (x != null) {
+      this.sprite.body.velocity.x = x
+    }
+    if (y != null) {
+      this.sprite.body.velocity.y = y
+    }
   }
 
   faceLeft () {

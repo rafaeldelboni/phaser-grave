@@ -31,7 +31,7 @@ const attacks = {
   },
   three: {
     name: 'attack_three',
-    duration: 35,
+    duration: 40,
     coolDown: 5
   }
 }
@@ -66,14 +66,13 @@ export default class Skeleton extends Actor {
     this.controls = new Controls(this)
 
     this.sprite.anchor.setTo(0.5)
-    this.sprite.animations.play('idle')
     this.setState(State.IDLE)
+    super.playAnimation('idle')
     super.faceRight()
   }
 
   setupBody () {
     // walk body
-    this.game.physics.arcade.enable(this.sprite)
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
@@ -111,17 +110,17 @@ export default class Skeleton extends Actor {
     if (this.controls.left && !this.controls.right) {
       this.setState(State.RUN)
       super.faceLeft()
-      this.sprite.animations.play('run')
-      this.sprite.body.velocity.x = -attributes.speed
+      super.playAnimation('run')
+      super.setVelocity(-attributes.speed)
     } else if (this.controls.right && !this.controls.left) {
       this.setState(State.RUN)
       super.faceRight()
-      this.sprite.animations.play('run')
-      this.sprite.body.velocity.x = attributes.speed
+      super.playAnimation('run')
+      super.setVelocity(attributes.speed)
     } else {
       this.setState(State.IDLE)
-      this.sprite.body.velocity.x = 0
-      this.sprite.animations.play('idle')
+      super.setVelocity(0)
+      super.playAnimation('idle')
     }
   }
 
@@ -131,19 +130,19 @@ export default class Skeleton extends Actor {
       this.state.name = current.name
       this.state.combo = current.combo
       this.state.duration = current.duration
-      this.sprite.animations.play(current.name)
+      super.playAnimation(current.name)
     } else if (next && this.state.time >= this.state.combo) {
       this.state.time = 0
       this.state.name = next.name
       this.state.combo = next.combo
       this.state.duration = next.duration
-      this.sprite.animations.play(next.name)
+      super.playAnimation(next.name)
     }
   }
 
   attack () {
     if (this.controls.attack) {
-      this.sprite.body.velocity.x = 0
+      super.setVelocity(0)
       switch (this.state.name) {
         default:
         case attacks.one.name:
@@ -163,8 +162,8 @@ export default class Skeleton extends Actor {
     if (this.controls.roll) {
       this.sprite.anchor.setTo(0.25, 0.5)
       this.setState(State.ROLL)
-      this.sprite.animations.play('roll')
-      this.sprite.body.velocity.x = 180 * this.sprite.scale.x
+      super.playAnimation('roll')
+      super.setVelocity(180 * this.sprite.scale.x)
     }
   }
 
