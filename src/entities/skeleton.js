@@ -2,6 +2,8 @@ import Actor from './actor'
 import Animations from './helpers/animations'
 import Controls from './helpers/controls'
 
+import { types as stateTypes, Idle, Attack } from './states'
+
 const attributes = {
   name: 'skeleton',
   weight: 1,
@@ -21,7 +23,8 @@ const attacks = {
     name: 'attack_one',
     combo: 30,
     duration: 35,
-    coolDown: 5
+    coolDown: 15,
+    cooldown: 15
   },
   two: {
     name: 'attack_two',
@@ -67,8 +70,10 @@ export default class Skeleton extends Actor {
 
     this.sprite.anchor.setTo(0.5)
     this.setState(State.IDLE)
-    super.playAnimation('idle')
-    super.faceRight()
+
+    super.setStates([new Idle(this), new Attack(this, [attacks.one])])
+    this.playAnimation('idle')
+    this.faceRight()
   }
 
   setupBody () {
@@ -109,18 +114,19 @@ export default class Skeleton extends Actor {
   run () {
     if (this.controls.left && !this.controls.right) {
       this.setState(State.RUN)
-      super.faceLeft()
-      super.playAnimation('run')
-      super.setVelocity(-attributes.speed)
+      this.faceLeft()
+      this.playAnimation('run')
+      this.setVelocity(-attributes.speed)
     } else if (this.controls.right && !this.controls.left) {
       this.setState(State.RUN)
-      super.faceRight()
-      super.playAnimation('run')
-      super.setVelocity(attributes.speed)
+      this.faceRight()
+      this.playAnimation('run')
+      this.setVelocity(attributes.speed)
     } else {
       this.setState(State.IDLE)
-      super.setVelocity(0)
-      super.playAnimation('idle')
+      this.setVelocity(0)
+      this.playAnimation('idle')
+      super.setState(stateTypes.idle)
     }
   }
 
@@ -130,19 +136,20 @@ export default class Skeleton extends Actor {
       this.state.name = current.name
       this.state.combo = current.combo
       this.state.duration = current.duration
-      super.playAnimation(current.name)
+      this.playAnimation(current.name)
     } else if (next && this.state.time >= this.state.combo) {
       this.state.time = 0
       this.state.name = next.name
       this.state.combo = next.combo
       this.state.duration = next.duration
-      super.playAnimation(next.name)
+      this.playAnimation(next.name)
     }
   }
 
   attack () {
     if (this.controls.attack) {
-      super.setVelocity(0)
+      super.setState(stateTypes.attack)
+      this.setVelocity(0)
       switch (this.state.name) {
         default:
         case attacks.one.name:
@@ -162,8 +169,8 @@ export default class Skeleton extends Actor {
     if (this.controls.roll) {
       this.sprite.anchor.setTo(0.25, 0.5)
       this.setState(State.ROLL)
-      super.playAnimation('roll')
-      super.setVelocity(180 * this.sprite.scale.x)
+      this.playAnimation('roll')
+      this.setVelocity(180 * this.sprite.scale.x)
     }
   }
 
@@ -201,6 +208,8 @@ export default class Skeleton extends Actor {
   }
 
   update () {
+    super.update()
+    console.log(super.getState())
     this.handleStates()
   }
 
