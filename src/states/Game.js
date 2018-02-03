@@ -26,23 +26,27 @@ export default class extends Phaser.State {
 
     for (let i = 0; i <= 320; i += 32) {
       this.background.create(i, 116, 'atlas', 'bg_grass')
-      this.background.create(i, 148, 'atlas', 'wall_0')
+      const wall = this.background.create(i, 148, 'atlas', 'wall_0')
+      wall.fixedToCamera = true
     }
 
     this.background.sort('y', Phaser.Group.SORT_ASCENDING)
   }
 
   create () {
+    this.game.world.setBounds(0, -360, 3000, 540)
     this.setBackground()
 
     this.skeleton = new Skeleton(
       this.game,
-      this.game.add.sprite(
-        this.world.centerX - 25,
-        this.world.centerY + 33,
-        'atlas',
-        ''
-      )
+      this.game.add.sprite(100, 123, 'atlas', '')
+    )
+
+    this.game.camera.setBoundsToWorld()
+    this.game.camera.follow(
+      this.skeleton.sprite,
+      Phaser.Camera.FOLLOW_LOCKON,
+      0.2
     )
   }
 
