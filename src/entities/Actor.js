@@ -1,3 +1,5 @@
+import { State } from './states'
+
 export default class Actor {
   constructor (game, sprite) {
     this.game = game
@@ -22,14 +24,15 @@ export default class Actor {
     for (const h of this.hitboxes.children) {
       h.scale.x = xFactor
     }
+    return xFactor
   }
 
   faceLeft () {
-    this._face(-1)
+    return this._face(-1)
   }
 
   faceRight () {
-    this._face(1)
+    return this._face(1)
   }
 
   setStates (value) {
@@ -37,18 +40,25 @@ export default class Actor {
   }
 
   getState () {
-    return this.states.find(state => state.time || state.timeless)
+    return (
+      this.states.find(state => state.time || state.timeless) || new State()
+    )
   }
 
-  setState (newStateType) {
+  setState (newStateType, parameters) {
     const current = this.getState()
-    if (!current || (current.timeless && current.type !== newStateType)) {
-      if (current && current.timeless) {
+
+    if (
+      !current.time ||
+      (current.restartable && current.type === newStateType) ||
+      (current.timeless && current.type !== newStateType)
+    ) {
+      if (current.timeless) {
         this.states.filter(state => state.timeless).map(state => state.stop())
       }
       this.states
-        .filter(state => !state.time && state.type === newStateType)
-        .map(state => state.start())
+        .filter(state => state.type === newStateType)
+        .map(state => state.start(parameters))
     }
   }
 

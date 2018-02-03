@@ -33,7 +33,7 @@ export default class Controls {
 
   isDownTimeout (keys) {
     return keys
-      .map(key => key.downDuration(250))
+      .map(key => key.downDuration(1))
       .reduce((accumulator, current) => accumulator || current)
   }
 

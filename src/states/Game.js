@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Skeleton from '../entities/skeleton'
+import Skeleton from '../entities/Skeleton'
 
 export default class extends Phaser.State {
   init () {}

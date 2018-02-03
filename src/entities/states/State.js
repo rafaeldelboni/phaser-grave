@@ -3,6 +3,7 @@ export default class State {
     this.actor = actor
     this.type = type
     this.timeless = false
+    this.restartable = false
     this.time = 0
     this._cooldown = 0
   }

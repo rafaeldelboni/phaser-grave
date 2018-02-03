@@ -1,6 +1,6 @@
 import { State, types } from './'
 
-export default class Attack extends State {
+export default class Idle extends State {
   constructor (actor) {
     super(actor, types.idle)
   }
@@ -8,8 +8,8 @@ export default class Attack extends State {
   start () {
     this.timeless = true
 
-    // this.actor.setVelocity(0)
-    // this.actor.playAnimation(this.current.name)
+    this.actor.setVelocity(0)
+    this.actor.playAnimation('idle')
   }
 
   stop () {
