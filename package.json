@@ -10,8 +10,7 @@
     "prepush": "yarn lint",
     "dev": "webpack",
     "build": "webpack --config webpack.production.config.js",
-    "lint": "eslint './src/**/*.js'",
-    "start": "http-server ./build"
+    "lint": "eslint './src/**/*.js'"
   },
   "license": "MIT",
   "devDependencies": {
@@ -41,7 +40,6 @@
     "webpack-spritesmith": "^0.4.0"
   },
   "dependencies": {
-    "http-server": "^0.11.1",
     "phaser-ce": "^2.9.4",
     "webfontloader": "^1.6.28"
   },
