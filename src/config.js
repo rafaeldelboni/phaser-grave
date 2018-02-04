@@ -7,5 +7,6 @@ export default {
   height: 180,
   renderer: Phaser.CANVAS,
   parent: 'content',
-  localStorageName: 'phasergrave'
+  localStorageName: 'phasergrave',
+  antialias: false
 }
