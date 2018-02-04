@@ -27,7 +27,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: './',
-    filename: 'js/bundle.js'
+    filename: 'js/bundle.[chunkhash].js'
   },
   plugins: [
     definePlugin,
@@ -43,7 +43,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin(
       {
         name: 'vendor' /* chunkName= */,
-        filename: 'js/vendor.bundle.js' /* filename= */
+        filename: 'js/vendor.bundle.[chunkhash].js' /* filename= */
       }
     ),
     new HtmlWebpackPlugin({

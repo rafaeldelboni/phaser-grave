@@ -13,12 +13,12 @@ export default class Controls {
         this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
       ],
       attack: [
-        this.game.input.keyboard.addKey(Phaser.Keyboard.K),
+        this.game.input.keyboard.addKey(Phaser.Keyboard.J),
         this.game.input.keyboard.addKey(Phaser.Keyboard.O),
         this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER)
       ],
       roll: [
-        this.game.input.keyboard.addKey(Phaser.Keyboard.J),
+        this.game.input.keyboard.addKey(Phaser.Keyboard.K),
         this.game.input.keyboard.addKey(Phaser.Keyboard.P),
         this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
       ]

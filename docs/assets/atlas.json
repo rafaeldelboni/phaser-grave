@@ -1,0 +1,1094 @@
+{
+    "frames": {
+        "bg_clouds": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 640,
+                "h": 140
+            }
+        },
+        "bg_gameover": {
+            "frame": {
+                "x": 0,
+                "y": 284,
+                "w": 320,
+                "h": 180
+            }
+        },
+        "bg_grass": {
+            "frame": {
+                "x": 580,
+                "y": 516,
+                "w": 32,
+                "h": 36
+            }
+        },
+        "bg_graves_one": {
+            "frame": {
+                "x": 258,
+                "y": 937,
+                "w": 416,
+                "h": 91
+            }
+        },
+        "bg_graves_three": {
+            "frame": {
+                "x": 0,
+                "y": 142,
+                "w": 640,
+                "h": 140
+            }
+        },
+        "bg_graves_two": {
+            "frame": {
+                "x": 0,
+                "y": 466,
+                "w": 480,
+                "h": 105
+            }
+        },
+        "fence_0": {
+            "frame": {
+                "x": 872,
+                "y": 623,
+                "w": 16,
+                "h": 40
+            }
+        },
+        "grave_0": {
+            "frame": {
+                "x": 1130,
+                "y": 805,
+                "w": 16,
+                "h": 40
+            }
+        },
+        "grave_1": {
+            "frame": {
+                "x": 676,
+                "y": 987,
+                "w": 16,
+                "h": 40
+            }
+        },
+        "grave_2": {
+            "frame": {
+                "x": 694,
+                "y": 987,
+                "w": 16,
+                "h": 40
+            }
+        },
+        "wall_0": {
+            "frame": {
+                "x": 774,
+                "y": 721,
+                "w": 32,
+                "h": 32
+            }
+        },
+        "bar_0": {
+            "frame": {
+                "x": 900,
+                "y": 728,
+                "w": 200,
+                "h": 8
+            }
+        },
+        "boss_0": {
+            "frame": {
+                "x": 482,
+                "y": 466,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_attack_0": {
+            "frame": {
+                "x": 900,
+                "y": 182,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_1": {
+            "frame": {
+                "x": 900,
+                "y": 364,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_10": {
+            "frame": {
+                "x": 900,
+                "y": 546,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_11": {
+            "frame": {
+                "x": 0,
+                "y": 755,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_12": {
+            "frame": {
+                "x": 258,
+                "y": 755,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_13": {
+            "frame": {
+                "x": 516,
+                "y": 755,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_14": {
+            "frame": {
+                "x": 774,
+                "y": 755,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_2": {
+            "frame": {
+                "x": 0,
+                "y": 937,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_3": {
+            "frame": {
+                "x": 900,
+                "y": 0,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_4": {
+            "frame": {
+                "x": 516,
+                "y": 573,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_5": {
+            "frame": {
+                "x": 258,
+                "y": 573,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_6": {
+            "frame": {
+                "x": 0,
+                "y": 573,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_7": {
+            "frame": {
+                "x": 642,
+                "y": 182,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_8": {
+            "frame": {
+                "x": 642,
+                "y": 364,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_9": {
+            "frame": {
+                "x": 322,
+                "y": 284,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_attack_damage_0": {
+            "frame": {
+                "x": 642,
+                "y": 0,
+                "w": 256,
+                "h": 180
+            }
+        },
+        "boss_mask_0": {
+            "frame": {
+                "x": 1158,
+                "y": 294,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_0": {
+            "frame": {
+                "x": 1158,
+                "y": 196,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_1": {
+            "frame": {
+                "x": 1158,
+                "y": 98,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_2": {
+            "frame": {
+                "x": 1158,
+                "y": 0,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_3": {
+            "frame": {
+                "x": 1032,
+                "y": 755,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_4": {
+            "frame": {
+                "x": 774,
+                "y": 573,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "boss_walk_5": {
+            "frame": {
+                "x": 1158,
+                "y": 392,
+                "w": 96,
+                "h": 96
+            }
+        },
+        "confetti_0": {
+            "frame": {
+                "x": 660,
+                "y": 546,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_1": {
+            "frame": {
+                "x": 678,
+                "y": 546,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_2": {
+            "frame": {
+                "x": 696,
+                "y": 546,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_3": {
+            "frame": {
+                "x": 1158,
+                "y": 1090,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_4": {
+            "frame": {
+                "x": 642,
+                "y": 546,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_5": {
+            "frame": {
+                "x": 1176,
+                "y": 1090,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_6": {
+            "frame": {
+                "x": 1230,
+                "y": 1090,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_7": {
+            "frame": {
+                "x": 1212,
+                "y": 1090,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "confetti_8": {
+            "frame": {
+                "x": 1194,
+                "y": 1090,
+                "w": 16,
+                "h": 16
+            }
+        },
+        "crow_0": {
+            "frame": {
+                "x": 872,
+                "y": 573,
+                "w": 24,
+                "h": 48
+            }
+        },
+        "crow_1": {
+            "frame": {
+                "x": 872,
+                "y": 671,
+                "w": 24,
+                "h": 48
+            }
+        },
+        "crow_2": {
+            "frame": {
+                "x": 1130,
+                "y": 755,
+                "w": 24,
+                "h": 48
+            }
+        },
+        "crow_3": {
+            "frame": {
+                "x": 1130,
+                "y": 853,
+                "w": 24,
+                "h": 48
+            }
+        },
+        "crow_4": {
+            "frame": {
+                "x": 1216,
+                "y": 1119,
+                "w": 24,
+                "h": 48
+            }
+        },
+        "feather_0": {
+            "frame": {
+                "x": 714,
+                "y": 546,
+                "w": 9,
+                "h": 9
+            }
+        },
+        "enemy_bar_0": {
+            "frame": {
+                "x": 1158,
+                "y": 1108,
+                "w": 25,
+                "h": 4
+            }
+        },
+        "expr_0": {
+            "frame": {
+                "x": 1248,
+                "y": 1090,
+                "w": 4,
+                "h": 4
+            }
+        },
+        "expr_bar_0": {
+            "frame": {
+                "x": 900,
+                "y": 738,
+                "w": 100,
+                "h": 6
+            }
+        },
+        "knight_attack_0": {
+            "frame": {
+                "x": 782,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_1": {
+            "frame": {
+                "x": 864,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_10": {
+            "frame": {
+                "x": 946,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_11": {
+            "frame": {
+                "x": 1028,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_2": {
+            "frame": {
+                "x": 0,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_3": {
+            "frame": {
+                "x": 82,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_4": {
+            "frame": {
+                "x": 164,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_5": {
+            "frame": {
+                "x": 246,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_6": {
+            "frame": {
+                "x": 328,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_7": {
+            "frame": {
+                "x": 410,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_8": {
+            "frame": {
+                "x": 492,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_attack_9": {
+            "frame": {
+                "x": 574,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_block_0": {
+            "frame": {
+                "x": 656,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_0": {
+            "frame": {
+                "x": 738,
+                "y": 1119,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_1": {
+            "frame": {
+                "x": 700,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_2": {
+            "frame": {
+                "x": 618,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_3": {
+            "frame": {
+                "x": 536,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_4": {
+            "frame": {
+                "x": 454,
+                "y": 1030,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_die_5": {
+            "frame": {
+                "x": 1068,
+                "y": 937,
+                "w": 80,
+                "h": 48
+            }
+        },
+        "knight_hitstun_0": {
+            "frame": {
+                "x": 1110,
+                "y": 1030,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_idle_0": {
+            "frame": {
+                "x": 100,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_idle_1": {
+            "frame": {
+                "x": 142,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_idle_2": {
+            "frame": {
+                "x": 352,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_mask_0": {
+            "frame": {
+                "x": 436,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_run_0": {
+            "frame": {
+                "x": 580,
+                "y": 284,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_run_1": {
+            "frame": {
+                "x": 0,
+                "y": 1169,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_run_2": {
+            "frame": {
+                "x": 580,
+                "y": 466,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_run_3": {
+            "frame": {
+                "x": 580,
+                "y": 384,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_run_4": {
+            "frame": {
+                "x": 580,
+                "y": 334,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_run_5": {
+            "frame": {
+                "x": 50,
+                "y": 1169,
+                "w": 48,
+                "h": 48
+            }
+        },
+        "knight_walk_0": {
+            "frame": {
+                "x": 184,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_walk_1": {
+            "frame": {
+                "x": 226,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_walk_2": {
+            "frame": {
+                "x": 268,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "knight_walk_3": {
+            "frame": {
+                "x": 310,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_0": {
+            "frame": {
+                "x": 1150,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_1": {
+            "frame": {
+                "x": 820,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_2": {
+            "frame": {
+                "x": 1084,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_3": {
+            "frame": {
+                "x": 1018,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_4": {
+            "frame": {
+                "x": 952,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_one_damage_0": {
+            "frame": {
+                "x": 886,
+                "y": 1119,
+                "w": 64,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_0": {
+            "frame": {
+                "x": 258,
+                "y": 1030,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_1": {
+            "frame": {
+                "x": 970,
+                "y": 937,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_2": {
+            "frame": {
+                "x": 872,
+                "y": 937,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_3": {
+            "frame": {
+                "x": 774,
+                "y": 937,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_4": {
+            "frame": {
+                "x": 676,
+                "y": 937,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_5": {
+            "frame": {
+                "x": 1032,
+                "y": 853,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_three_damage_0": {
+            "frame": {
+                "x": 774,
+                "y": 671,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_0": {
+            "frame": {
+                "x": 1158,
+                "y": 1040,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_1": {
+            "frame": {
+                "x": 1158,
+                "y": 990,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_2": {
+            "frame": {
+                "x": 356,
+                "y": 1030,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_3": {
+            "frame": {
+                "x": 1158,
+                "y": 890,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_4": {
+            "frame": {
+                "x": 1158,
+                "y": 840,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_attack_two_damage_0": {
+            "frame": {
+                "x": 1158,
+                "y": 790,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_bones_0": {
+            "frame": {
+                "x": 808,
+                "y": 721,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_1": {
+            "frame": {
+                "x": 608,
+                "y": 434,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_2": {
+            "frame": {
+                "x": 594,
+                "y": 434,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_3": {
+            "frame": {
+                "x": 580,
+                "y": 434,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_4": {
+            "frame": {
+                "x": 850,
+                "y": 721,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_5": {
+            "frame": {
+                "x": 836,
+                "y": 721,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_6": {
+            "frame": {
+                "x": 822,
+                "y": 721,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_7": {
+            "frame": {
+                "x": 628,
+                "y": 516,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_8": {
+            "frame": {
+                "x": 614,
+                "y": 516,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_bones_9": {
+            "frame": {
+                "x": 622,
+                "y": 434,
+                "w": 12,
+                "h": 20
+            }
+        },
+        "skeleton_hitstun_0": {
+            "frame": {
+                "x": 856,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_idle_0": {
+            "frame": {
+                "x": 562,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_idle_1": {
+            "frame": {
+                "x": 604,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_idle_2": {
+            "frame": {
+                "x": 646,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_mask_0": {
+            "frame": {
+                "x": 688,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_roll_0": {
+            "frame": {
+                "x": 1158,
+                "y": 740,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_1": {
+            "frame": {
+                "x": 1158,
+                "y": 690,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_2": {
+            "frame": {
+                "x": 1158,
+                "y": 640,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_3": {
+            "frame": {
+                "x": 1158,
+                "y": 540,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_4": {
+            "frame": {
+                "x": 1158,
+                "y": 940,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_5": {
+            "frame": {
+                "x": 1158,
+                "y": 490,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_roll_6": {
+            "frame": {
+                "x": 1158,
+                "y": 590,
+                "w": 96,
+                "h": 48
+            }
+        },
+        "skeleton_run_0": {
+            "frame": {
+                "x": 730,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_run_1": {
+            "frame": {
+                "x": 814,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_run_2": {
+            "frame": {
+                "x": 772,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_run_3": {
+            "frame": {
+                "x": 520,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_run_4": {
+            "frame": {
+                "x": 394,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        },
+        "skeleton_run_5": {
+            "frame": {
+                "x": 478,
+                "y": 1169,
+                "w": 40,
+                "h": 48
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.2.2",
+        "image": "/home/rafael/Workspace/phaser-grave/build/assets/atlas.png",
+        "scale": 1,
+        "size": {
+            "w": 1254,
+            "h": 1217
+        }
+    }
+}

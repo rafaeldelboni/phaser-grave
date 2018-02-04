@@ -15,7 +15,7 @@ const attributes = {
     { name: 'attack_two', start: 0, stop: 4, speed: 7, loop: false },
     { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false }
   ],
-  speed: 100,
+  speed: 125,
   roll: { duration: 36, cooldown: 0, speed: 180 },
   attacks: [
     {
