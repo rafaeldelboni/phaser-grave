@@ -31,6 +31,9 @@ export default class Attack extends State {
       this.cooldown = attack.cooldown
       this.combo = attack.combo
 
+      if (attack.archorX) {
+        this.actor.sprite.anchor.x = attack.archorX
+      }
       this.actor.setVelocity(0)
       this.actor.playAnimation(attack.name)
     }

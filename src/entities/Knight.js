@@ -1,50 +1,40 @@
 import Actor from './Actor'
 import Animations from './helpers/Animations'
-import Controls from './helpers/Controls'
 
-import { types as stateTypes, Idle, Run, Roll, Attack } from './states'
+import { types as stateTypes, Idle, Run, Attack } from './states'
 
 const attributes = {
-  name: 'skeleton',
+  name: 'knight',
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
     { name: 'run', start: 0, stop: 5, speed: 9, loop: true },
-    { name: 'roll', start: 0, stop: 6, speed: 12, loop: false },
-    { name: 'attack_one', start: 0, stop: 4, speed: 7, loop: false },
-    { name: 'attack_two', start: 0, stop: 4, speed: 7, loop: false },
-    { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false }
+    { name: 'walk', start: 0, stop: 3, speed: 9, loop: true },
+    { name: 'attack', start: 0, stop: 11, speed: 9, loop: false },
+    { name: 'die', start: 0, stop: 5, speed: 7, loop: false },
+    { name: 'block', start: 0, stop: 0, speed: 1, loop: true },
+    { name: 'hitstun', start: 0, stop: 0, speed: 1, loop: true }
   ],
   idle: { archorX: 0.5 },
-  run: { speed: 125, archorX: 0.5 },
-  roll: { duration: 36, cooldown: 0, speed: 180, archorX: 0.25 },
+  run: { speed: 50, archorX: 0.45 },
   attacks: [
     {
-      name: 'attack_one',
-      duration: 35,
-      cooldown: 5,
-      combo: 15,
-      next: 'attack_two'
-    },
-    {
-      name: 'attack_two',
-      duration: 35,
-      cooldown: 5,
-      combo: 10,
-      next: 'attack_three'
-    },
-    {
-      name: 'attack_three',
-      duration: 65,
-      cooldown: 15
+      name: 'attack',
+      duration: 75,
+      cooldown: 10,
+      archorX: 0.25
     }
-  ]
+  ],
+  ai: {
+    attackRange: 2000
+  }
 }
 
-export default class Skeleton extends Actor {
-  constructor (game, sprite) {
+export default class Knight extends Actor {
+  constructor (game, sprite, player) {
     super(game, sprite)
     this.game = game
+    this.player = player
     this.name = attributes.name
     this.weight = attributes.weight
     this.anims = Animations.addMultiple(
@@ -53,22 +43,20 @@ export default class Skeleton extends Actor {
       attributes.animations
     )
     this.setupBody()
-    this.controls = new Controls(this)
+    this.controls = {}
 
     super.setStates([
       new Idle(this, attributes.idle),
       new Run(this, attributes.run),
-      new Roll(this, attributes.roll),
       new Attack(this, attributes.attacks)
     ])
 
     this.sprite.anchor.setTo(attributes.idle.archorX)
     this.playAnimation('idle')
-    this.faceRight()
+    this.faceLeft()
   }
 
   setupBody () {
-    // walk body
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
@@ -76,20 +64,10 @@ export default class Skeleton extends Actor {
     hitboxes.enableBody = true
     this.game.physics.arcade.enable(hitboxes)
 
-    const attackOne = hitboxes.create(0, 0, null)
-    attackOne.anchor.set(0.5)
-    attackOne.body.setSize(30, 18, 18, 15)
-    attackOne.name = 'attack_one'
-
-    const attackTwo = hitboxes.create(0, 0, null)
-    attackTwo.anchor.set(0.5)
-    attackTwo.body.setSize(20, 28, 25, 8)
-    attackTwo.name = 'attack_two'
-
-    const attackThree = hitboxes.create(0, 0, null)
-    attackThree.anchor.set(0.5)
-    attackThree.body.setSize(52, 8, 7, 22)
-    attackThree.name = 'attack_three'
+    const attack = hitboxes.create(0, 0, null)
+    attack.anchor.set(0.5)
+    attack.body.setSize(30, 18, 18, 15)
+    attack.name = 'attack'
 
     const torso = hitboxes.create(0, 0, null)
     torso.anchor.set(0.5)
@@ -100,6 +78,33 @@ export default class Skeleton extends Actor {
 
     this.sprite.addChild(hitboxes)
     this.hitboxes = hitboxes
+  }
+
+  ai () {
+    this.controls = {}
+    const player = this.player.sprite
+    const playerDistance = this.game.math.distanceSq(
+      this.sprite.x,
+      0,
+      player.x,
+      0
+    )
+    const playerDirection = this.sprite.x > player.x ? 'left' : 'right'
+    if (playerDistance > attributes.ai.attackRange) {
+      this.controls[playerDirection] = true
+    } else {
+      if (this.direction.name !== playerDirection) {
+        this.controls[playerDirection] = true
+      } else {
+        const attack = this.states.find(
+          state => state.type === stateTypes.attack
+        )
+
+        if (!attack.cooldown) {
+          this.controls.attack = true
+        }
+      }
+    }
   }
 
   run () {
@@ -124,29 +129,19 @@ export default class Skeleton extends Actor {
     }
   }
 
-  roll () {
-    if (this.controls.roll) {
-      super.setState(stateTypes.roll)
-    }
-  }
-
   handleStates () {
     switch (super.getState().type) {
       default:
       case stateTypes.idle:
         this.run()
         this.attack()
-        this.roll()
         break
       case stateTypes.run:
         this.run()
         this.attack()
-        this.roll()
         break
       case stateTypes.attack:
         this.attack()
-        break
-      case stateTypes.roll:
         break
     }
   }
@@ -154,6 +149,7 @@ export default class Skeleton extends Actor {
   update () {
     super.update()
     this.handleStates()
+    this.ai()
   }
 
   render () {

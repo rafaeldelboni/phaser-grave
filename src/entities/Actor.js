@@ -6,6 +6,7 @@ export default class Actor {
     this.sprite = sprite
     this.states = []
     this.weight = 1
+    this.direction = {}
     this.game.physics.arcade.enable(this.sprite)
   }
 
@@ -27,12 +28,19 @@ export default class Actor {
     return xFactor
   }
 
+  face (direction) {
+    this.direction = { name: direction, factor: direction === 'right' ? 1 : -1 }
+    return this._face(this.direction.factor)
+  }
+
   faceLeft () {
-    return this._face(-1)
+    this.direction = { name: 'left', factor: -1 }
+    return this._face(this.direction.factor)
   }
 
   faceRight () {
-    return this._face(1)
+    this.direction = { name: 'right', factor: 1 }
+    return this._face(this.direction.factor)
   }
 
   setStates (value) {

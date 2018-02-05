@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
-import { Fence, Grave } from '../sprites'
-import Skeleton from '../entities/Skeleton'
+import { Fence, Grave } from '../objects'
+import { Knight, Skeleton } from '../entities'
 
 export default class extends Phaser.State {
   init () {}
@@ -24,7 +24,6 @@ export default class extends Phaser.State {
       'bg_clouds',
       '#d2d2d2'
     )
-
     this.firstLayerBg = this._createBackgroundLayer(
       40,
       416,
@@ -32,7 +31,6 @@ export default class extends Phaser.State {
       'bg_graves_one',
       '#8c8c8c'
     )
-
     this.secondLayerBg = this._createBackgroundLayer(
       45,
       480,
@@ -40,7 +38,6 @@ export default class extends Phaser.State {
       'bg_graves_two',
       '#787878'
     )
-
     this.thirdLayerBg = this._createBackgroundLayer(
       38,
       640,
@@ -48,7 +45,6 @@ export default class extends Phaser.State {
       'bg_graves_three',
       '#646464'
     )
-
     this.floorLayerBg = this._createBackgroundLayer(
       116,
       32,
@@ -66,15 +62,14 @@ export default class extends Phaser.State {
     Grave.factory(this.game, 92, 127, 2)
     Grave.factory(this.game, 125, 127, 1)
     Grave.factory(this.game, 160, 127, 1)
-
-    this.fences = this.game.add.group(this.world, 'fences')
-    this.fences.add(new Fence(this.game, 200, 127))
-    this.fences.add(new Fence(this.game, 1050, 127))
-
     Grave.factory(this.game, 1100, 127, 2)
     Grave.factory(this.game, 1115, 127, 2)
     Grave.factory(this.game, 1170, 127, 0)
     Grave.factory(this.game, 1235, 127, 1)
+
+    this.fences = this.game.add.group(this.world, 'fences')
+    this.fences.add(new Fence(this.game, 200, 127))
+    this.fences.add(new Fence(this.game, 1050, 127))
   }
 
   create () {
@@ -85,6 +80,12 @@ export default class extends Phaser.State {
     this.skeleton = new Skeleton(
       this.game,
       this.game.add.sprite(300, 123, 'atlas', '')
+    )
+
+    this.knight = new Knight(
+      this.game,
+      this.game.add.sprite(350, 123, 'atlas', ''),
+      this.skeleton
     )
 
     this.game.camera.setBoundsToWorld()
@@ -100,6 +101,7 @@ export default class extends Phaser.State {
     this.game.physics.arcade.collide(this.skeleton.sprite, this.fences)
 
     this.skeleton.update()
+    this.knight.update()
 
     this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85
@@ -109,9 +111,10 @@ export default class extends Phaser.State {
 
   render () {
     this.skeleton.render()
+    this.knight.render()
     this.fences.forEach(fence => fence.render())
     if (this.game.config.isDevelopment) {
-      this.game.debug.spriteInfo(this.skeleton.sprite, 32, 32)
+      this.game.debug.spriteInfo(this.knight.sprite, 32, 32)
     }
   }
 }

@@ -11,6 +11,9 @@ export default class Roll extends State {
       this.time = this.roll.duration
       this.cooldown = this.roll.cooldown
 
+      if (this.roll.archorX) {
+        this.actor.sprite.anchor.x = this.roll.archorX
+      }
       this.actor.setVelocity(this.roll.speed * this.actor.sprite.scale.x)
       this.actor.playAnimation('roll')
     }
