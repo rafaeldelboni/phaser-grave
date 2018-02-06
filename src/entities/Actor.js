@@ -1,4 +1,3 @@
-import Phaser from 'phaser'
 import { State } from './states'
 
 export default class Actor {
