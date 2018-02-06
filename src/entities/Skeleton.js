@@ -24,7 +24,7 @@ const attributes = {
       duration: 35,
       cooldown: 5,
       damage: 10,
-      knockback: 5,
+      knockback: 1,
       combo: 15,
       next: 'attack_two'
     },
@@ -33,16 +33,16 @@ const attributes = {
       duration: 35,
       cooldown: 5,
       damage: 11,
-      knockback: 5,
+      knockback: 1,
       combo: 10,
       next: 'attack_three'
     },
     {
       name: 'attack_three',
       duration: 65,
-      cooldown: 15,
-      damage: 12,
-      knockback: 35
+      cooldown: 10,
+      damage: 6,
+      knockback: 15
     }
   ]
 }

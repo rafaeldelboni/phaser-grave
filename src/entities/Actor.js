@@ -107,9 +107,13 @@ export default class Actor {
       knockToX -= distance / this.weight
     }
 
-    this.game.add
-      .tween(this.sprite)
-      .to({ x: knockToX }, 100, Phaser.Easing.Linear.None, true)
+    this.game.physics.arcade.moveToXY(
+      this.sprite,
+      knockToX,
+      this.sprite.y,
+      110,
+      100
+    )
   }
 
   update () {

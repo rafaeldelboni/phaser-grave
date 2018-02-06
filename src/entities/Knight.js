@@ -25,7 +25,7 @@ const attributes = {
       archorX: 0.25
     }
   ],
-  hit: { duration: 35 },
+  hit: { duration: 34 },
   ai: {
     attackRange: 2000
   }
