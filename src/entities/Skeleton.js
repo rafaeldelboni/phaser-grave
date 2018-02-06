@@ -52,7 +52,7 @@ export default class Skeleton extends Actor {
       this.sprite.animations,
       attributes.animations
     )
-    this.setupBody()
+    this._setupBody()
     this.controls = new Controls(this)
 
     super.setStates([
@@ -62,12 +62,11 @@ export default class Skeleton extends Actor {
       new Attack(this, attributes.attacks)
     ])
 
-    this.sprite.anchor.setTo(attributes.idle.archorX)
-    this.playAnimation('idle')
+    this.playAnimation('idle', attributes.idle.archorX)
     this.faceRight()
   }
 
-  setupBody () {
+  _setupBody () {
     // walk body
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
@@ -102,7 +101,7 @@ export default class Skeleton extends Actor {
     this.hitboxes = hitboxes
   }
 
-  run () {
+  _run () {
     if (this.controls.left && !this.controls.right) {
       super.setState(stateTypes.run, {
         side: 'left',
@@ -118,33 +117,33 @@ export default class Skeleton extends Actor {
     }
   }
 
-  attack () {
+  _attack () {
     if (this.controls.attack) {
       super.setState(stateTypes.attack)
     }
   }
 
-  roll () {
+  _roll () {
     if (this.controls.roll) {
       super.setState(stateTypes.roll)
     }
   }
 
-  handleStates () {
+  _handleStates () {
     switch (super.getState().type) {
       default:
       case stateTypes.idle:
-        this.run()
-        this.attack()
-        this.roll()
+        this._run()
+        this._attack()
+        this._roll()
         break
       case stateTypes.run:
-        this.run()
-        this.attack()
-        this.roll()
+        this._run()
+        this._attack()
+        this._roll()
         break
       case stateTypes.attack:
-        this.attack()
+        this._attack()
         break
       case stateTypes.roll:
         break
@@ -153,7 +152,7 @@ export default class Skeleton extends Actor {
 
   update () {
     super.update()
-    this.handleStates()
+    this._handleStates()
   }
 
   render () {

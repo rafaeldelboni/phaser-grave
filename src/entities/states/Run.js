@@ -16,11 +16,8 @@ export default class Run extends State {
       speedSide = this.actor.faceLeft()
     }
 
-    if (this.run.archorX) {
-      this.actor.sprite.anchor.x = this.run.archorX
-    }
     this.actor.setVelocity(parameters.speed * speedSide)
-    this.actor.playAnimation(this.run.animation || 'run')
+    this.actor.playAnimation(this.run.animation || 'run', this.run.archorX)
   }
 
   stop () {

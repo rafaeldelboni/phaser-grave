@@ -9,11 +9,8 @@ export default class Idle extends State {
   start () {
     this.timeless = true
 
-    if (this.idle.archorX) {
-      this.actor.sprite.anchor.x = this.idle.archorX
-    }
     this.actor.setVelocity(0)
-    this.actor.playAnimation('idle')
+    this.actor.playAnimation('idle', this.idle.archorX)
   }
 
   stop () {

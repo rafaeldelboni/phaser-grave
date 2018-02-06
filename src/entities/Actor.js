@@ -70,7 +70,8 @@ export default class Actor {
     }
   }
 
-  playAnimation (animationName) {
+  playAnimation (animationName, archorX = 0.5, archorY = 0.5) {
+    this.sprite.anchor.set(archorX, archorY)
     return this.sprite.animations.play(animationName)
   }
 

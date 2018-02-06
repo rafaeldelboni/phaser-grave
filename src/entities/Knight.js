@@ -42,7 +42,7 @@ export default class Knight extends Actor {
       this.sprite.animations,
       attributes.animations
     )
-    this.setupBody()
+    this._setupBody()
     this.controls = {}
 
     super.setStates([
@@ -51,12 +51,11 @@ export default class Knight extends Actor {
       new Attack(this, attributes.attacks)
     ])
 
-    this.sprite.anchor.setTo(attributes.idle.archorX)
-    this.playAnimation('idle')
+    this.playAnimation('idle', attributes.idle.archorX)
     this.faceLeft()
   }
 
-  setupBody () {
+  _setupBody () {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
@@ -80,7 +79,7 @@ export default class Knight extends Actor {
     this.hitboxes = hitboxes
   }
 
-  ai () {
+  _ai () {
     this.controls = {}
     const player = this.player.sprite
     const playerDistance = this.game.math.distanceSq(
@@ -107,7 +106,7 @@ export default class Knight extends Actor {
     }
   }
 
-  run () {
+  _run () {
     if (this.controls.left && !this.controls.right) {
       super.setState(stateTypes.run, {
         side: 'left',
@@ -123,33 +122,33 @@ export default class Knight extends Actor {
     }
   }
 
-  attack () {
+  _attack () {
     if (this.controls.attack) {
       super.setState(stateTypes.attack)
     }
   }
 
-  handleStates () {
+  _handleStates () {
     switch (super.getState().type) {
       default:
       case stateTypes.idle:
-        this.run()
-        this.attack()
+        this._run()
+        this._attack()
         break
       case stateTypes.run:
-        this.run()
-        this.attack()
+        this._run()
+        this._attack()
         break
       case stateTypes.attack:
-        this.attack()
+        this._attack()
         break
     }
   }
 
   update () {
     super.update()
-    this.handleStates()
-    this.ai()
+    this._handleStates()
+    this._ai()
   }
 
   render () {

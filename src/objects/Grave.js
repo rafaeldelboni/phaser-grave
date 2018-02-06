@@ -6,6 +6,7 @@ export default class extends Phaser.Sprite {
     this.anchor.setTo(0.5)
     game.add.existing(this)
   }
+
   static factory (game, x, y, type) {
     return new this(game, x, y, type)
   }
