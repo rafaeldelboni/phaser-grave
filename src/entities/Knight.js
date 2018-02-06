@@ -1,7 +1,7 @@
 import Actor from './Actor'
 import Animations from './helpers/Animations'
 
-import { types as stateTypes, Idle, Run, Attack } from './states'
+import { types as stateTypes, Idle, Run, Attack, Hit } from './states'
 
 const attributes = {
   name: 'knight',
@@ -25,6 +25,7 @@ const attributes = {
       archorX: 0.25
     }
   ],
+  hit: { duration: 35 },
   ai: {
     attackRange: 2000
   }
@@ -45,10 +46,11 @@ export default class Knight extends Actor {
     this._setupBody()
     this.controls = {}
 
-    super.setStates([
+    super.initializeStates([
       new Idle(this, attributes.idle),
       new Run(this, attributes.run),
-      new Attack(this, attributes.attacks)
+      new Attack(this, attributes.attacks),
+      new Hit(this, attributes.hit)
     ])
 
     this.playAnimation('idle', attributes.idle.archorX)
@@ -59,24 +61,19 @@ export default class Knight extends Actor {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
-    const hitboxes = this.game.add.group()
-    hitboxes.enableBody = true
-    this.game.physics.arcade.enable(hitboxes)
-
-    const attack = hitboxes.create(0, 0, null)
+    const attack = this.hitboxes.create(0, 0, null)
     attack.anchor.set(0.5)
     attack.body.setSize(30, 18, 18, 15)
     attack.name = 'attack'
 
-    const torso = hitboxes.create(0, 0, null)
+    const torso = this.hitboxes.create(0, 0, null)
     torso.anchor.set(0.5)
     torso.body.setSize(17, 22, 11, 10)
     torso.name = 'torso'
 
-    hitboxes.children.map(hitbox => hitbox.reset(0, 0))
+    this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
 
-    this.sprite.addChild(hitboxes)
-    this.hitboxes = hitboxes
+    this.sprite.addChild(this.hitboxes)
   }
 
   _ai () {
@@ -142,7 +139,13 @@ export default class Knight extends Actor {
       case stateTypes.attack:
         this._attack()
         break
+      case stateTypes.hit:
+        break
     }
+  }
+
+  hit (damage) {
+    super.setState(stateTypes.hit, damage)
   }
 
   update () {

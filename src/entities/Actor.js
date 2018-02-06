@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import { State } from './states'
 
 export default class Actor {
@@ -7,7 +8,12 @@ export default class Actor {
     this.states = []
     this.weight = 1
     this.direction = {}
+    this.targets = []
+
     this.game.physics.arcade.enable(this.sprite)
+    this.hitboxes = this.game.add.group()
+    this.hitboxes.enableBody = true
+    this.game.physics.arcade.enable(this.hitboxes)
   }
 
   _calculateStateTimes () {
@@ -17,6 +23,7 @@ export default class Actor {
       } else if (state.cooldown) {
         state.cooldown--
       }
+      state.update()
     })
   }
 
@@ -43,8 +50,12 @@ export default class Actor {
     return this._face(this.direction.factor)
   }
 
-  setStates (value) {
-    this.states = value
+  getHitbox (name) {
+    return this.hitboxes.children.find(hitbox => hitbox.name === name)
+  }
+
+  initializeStates (states) {
+    this.states = states
   }
 
   getState () {
@@ -55,6 +66,10 @@ export default class Actor {
 
   setState (newStateType, parameters) {
     const current = this.getState()
+
+    if (newStateType.mandatory) {
+      this.states.map(state => state.stop())
+    }
 
     if (
       !current.time ||
@@ -82,6 +97,19 @@ export default class Actor {
     if (y != null) {
       this.sprite.body.velocity.y = y
     }
+  }
+
+  knockback (strikerPositionX, distance) {
+    let knockToX = this.sprite.x
+    if (strikerPositionX < this.sprite.x) {
+      knockToX += distance / this.weight
+    } else {
+      knockToX -= distance / this.weight
+    }
+
+    this.game.add
+      .tween(this.sprite)
+      .to({ x: knockToX }, 100, Phaser.Easing.Linear.None, true)
   }
 
   update () {

@@ -23,6 +23,8 @@ const attributes = {
       name: 'attack_one',
       duration: 35,
       cooldown: 5,
+      damage: 10,
+      knockback: 5,
       combo: 15,
       next: 'attack_two'
     },
@@ -30,13 +32,17 @@ const attributes = {
       name: 'attack_two',
       duration: 35,
       cooldown: 5,
+      damage: 11,
+      knockback: 5,
       combo: 10,
       next: 'attack_three'
     },
     {
       name: 'attack_three',
       duration: 65,
-      cooldown: 15
+      cooldown: 15,
+      damage: 12,
+      knockback: 35
     }
   ]
 }
@@ -55,7 +61,7 @@ export default class Skeleton extends Actor {
     this._setupBody()
     this.controls = new Controls(this)
 
-    super.setStates([
+    super.initializeStates([
       new Idle(this, attributes.idle),
       new Run(this, attributes.run),
       new Roll(this, attributes.roll),
@@ -71,34 +77,29 @@ export default class Skeleton extends Actor {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
-    const hitboxes = this.game.add.group()
-    hitboxes.enableBody = true
-    this.game.physics.arcade.enable(hitboxes)
-
-    const attackOne = hitboxes.create(0, 0, null)
+    const attackOne = this.hitboxes.create(0, 0, null)
     attackOne.anchor.set(0.5)
     attackOne.body.setSize(30, 18, 18, 15)
     attackOne.name = 'attack_one'
 
-    const attackTwo = hitboxes.create(0, 0, null)
+    const attackTwo = this.hitboxes.create(0, 0, null)
     attackTwo.anchor.set(0.5)
     attackTwo.body.setSize(20, 28, 25, 8)
     attackTwo.name = 'attack_two'
 
-    const attackThree = hitboxes.create(0, 0, null)
+    const attackThree = this.hitboxes.create(0, 0, null)
     attackThree.anchor.set(0.5)
     attackThree.body.setSize(52, 8, 7, 22)
     attackThree.name = 'attack_three'
 
-    const torso = hitboxes.create(0, 0, null)
+    const torso = this.hitboxes.create(0, 0, null)
     torso.anchor.set(0.5)
     torso.body.setSize(17, 22, 11, 10)
     torso.name = 'torso'
 
-    hitboxes.children.map(hitbox => hitbox.reset(0, 0))
+    this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
 
-    this.sprite.addChild(hitboxes)
-    this.hitboxes = hitboxes
+    this.sprite.addChild(this.hitboxes)
   }
 
   _run () {
@@ -150,8 +151,9 @@ export default class Skeleton extends Actor {
     }
   }
 
-  update () {
+  update (targets) {
     super.update()
+    this.targets = targets
     this._handleStates()
   }
 

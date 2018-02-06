@@ -82,11 +82,14 @@ export default class extends Phaser.State {
       this.game.add.sprite(300, 123, 'atlas', '')
     )
 
+    this.enemies = []
+
     this.knight = new Knight(
       this.game,
       this.game.add.sprite(350, 123, 'atlas', ''),
       this.skeleton
     )
+    this.enemies.push(this.knight)
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
@@ -100,8 +103,8 @@ export default class extends Phaser.State {
   update () {
     this.game.physics.arcade.collide(this.skeleton.sprite, this.fences)
 
-    this.skeleton.update()
-    this.knight.update()
+    this.skeleton.update(this.enemies)
+    this.knight.update(this.enemies.concat([this.skeleton]))
 
     this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85

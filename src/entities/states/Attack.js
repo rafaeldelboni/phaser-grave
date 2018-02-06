@@ -23,6 +23,17 @@ export default class Attack extends State {
     return this.attacks[0]
   }
 
+  _damage () {
+    const hitbox = this.actor.getHitbox(this.current.name)
+    for (const target of this.actor.targets) {
+      this.actor.game.physics.arcade.collide(
+        hitbox,
+        target.getHitbox('torso'),
+        () => target.hit({ striker: this.actor, attack: this.current })
+      )
+    }
+  }
+
   start () {
     if (!this.cooldown || this._isCombo()) {
       const attack = this._get()
@@ -33,6 +44,17 @@ export default class Attack extends State {
 
       this.actor.setVelocity(0)
       this.actor.playAnimation(attack.name, attack.archorX)
+    }
+  }
+
+  stop () {
+    this.time = 0
+    this.cooldown = 0
+  }
+
+  update () {
+    if (this.time === Math.round(this.current.duration / 2)) {
+      this._damage()
     }
   }
 }

@@ -15,4 +15,9 @@ export default class Roll extends State {
       this.actor.playAnimation('roll', this.roll.archorX)
     }
   }
+
+  stop () {
+    this.time = 0
+    this.cooldown = 0
+  }
 }

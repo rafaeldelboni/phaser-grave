@@ -15,4 +15,6 @@ export default class State {
   set cooldown (value) {
     this._cooldown = value >= 0 ? value : 0
   }
+
+  update () {}
 }
