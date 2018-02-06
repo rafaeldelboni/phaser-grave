@@ -2,6 +2,14 @@
 [![Status][badge-status]][badge-status]
 #### An [Phaser](https://github.com/photonstorm/phaser-ce) clone of [Grave](https://uheartbeast.itch.io/grave)
 
+#### [Online Demo](http://phaser-grave.herokuapp.com/)
+### Controls
+| Action | Command |
+| ------ | ------ |
+| Run | `A` `D`, `<-` `->` |
+| Roll | `Spacebar`, `K`, `P` |
+| Attack | `Enter`, `J`, `O` |
+
 # Setup
 You'll need to install a few things before you have a working copy of the project.
 
