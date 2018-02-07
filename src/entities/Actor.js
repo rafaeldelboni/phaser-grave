@@ -1,4 +1,4 @@
-import { State } from './states'
+import { State, types as stateTypes } from './states'
 
 export default class Actor {
   constructor (game, sprite) {
@@ -111,8 +111,14 @@ export default class Actor {
       knockToX,
       this.sprite.y,
       110,
-      100
+      110
     )
+  }
+
+  hit (damage) {
+    if (this !== damage.striker && this.getState().type !== stateTypes.roll) {
+      this.setState(stateTypes.hit, damage)
+    }
   }
 
   update () {

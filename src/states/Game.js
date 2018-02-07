@@ -101,10 +101,14 @@ export default class extends Phaser.State {
   }
 
   update () {
-    this.game.physics.arcade.collide(this.skeleton.sprite, this.fences)
-
     this.skeleton.update(this.enemies)
     this.knight.update(this.enemies.concat([this.skeleton]))
+
+    this.game.physics.arcade.collide(this.skeleton.sprite, this.fences)
+    this.game.physics.arcade.collide(
+      this.enemies.map(enemie => enemie.sprite),
+      this.fences
+    )
 
     this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85

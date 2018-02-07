@@ -22,12 +22,13 @@ const attributes = {
       name: 'attack',
       duration: 75,
       cooldown: 10,
+      knockback: 1,
       archorX: 0.25
     }
   ],
   hit: { duration: 34 },
   ai: {
-    attackRange: 2000
+    attackRange: 1600
   }
 }
 
@@ -63,12 +64,12 @@ export default class Knight extends Actor {
 
     const attack = this.hitboxes.create(0, 0, null)
     attack.anchor.set(0.5)
-    attack.body.setSize(30, 18, 18, 15)
+    attack.body.setSize(35, 28, 21, 8)
     attack.name = 'attack'
 
     const torso = this.hitboxes.create(0, 0, null)
     torso.anchor.set(0.5)
-    torso.body.setSize(17, 22, 11, 10)
+    torso.body.setSize(18, 25, 15, 8)
     torso.name = 'torso'
 
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
@@ -144,12 +145,9 @@ export default class Knight extends Actor {
     }
   }
 
-  hit (damage) {
-    super.setState(stateTypes.hit, damage)
-  }
-
-  update () {
+  update (targets) {
     super.update()
+    this.targets = targets
     this._handleStates()
     this._ai()
   }

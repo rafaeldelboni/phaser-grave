@@ -2,7 +2,7 @@ import Actor from './Actor'
 import Animations from './helpers/Animations'
 import Controls from './helpers/Controls'
 
-import { types as stateTypes, Idle, Run, Roll, Attack } from './states'
+import { types as stateTypes, Idle, Run, Roll, Attack, Hit } from './states'
 
 const attributes = {
   name: 'skeleton',
@@ -13,7 +13,8 @@ const attributes = {
     { name: 'roll', start: 0, stop: 6, speed: 12, loop: false },
     { name: 'attack_one', start: 0, stop: 4, speed: 7, loop: false },
     { name: 'attack_two', start: 0, stop: 4, speed: 7, loop: false },
-    { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false }
+    { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false },
+    { name: 'hitstun', start: 0, stop: 0, speed: 1, loop: true }
   ],
   idle: { archorX: 0.5 },
   run: { speed: 125, archorX: 0.5 },
@@ -44,7 +45,8 @@ const attributes = {
       damage: 6,
       knockback: 15
     }
-  ]
+  ],
+  hit: { duration: 34 }
 }
 
 export default class Skeleton extends Actor {
@@ -65,7 +67,8 @@ export default class Skeleton extends Actor {
       new Idle(this, attributes.idle),
       new Run(this, attributes.run),
       new Roll(this, attributes.roll),
-      new Attack(this, attributes.attacks)
+      new Attack(this, attributes.attacks),
+      new Hit(this, attributes.hit)
     ])
 
     this.playAnimation('idle', attributes.idle.archorX)
