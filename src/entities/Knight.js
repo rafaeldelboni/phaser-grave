@@ -79,7 +79,7 @@ export default class Knight extends Actor {
   }
 
   _setupParticles () {
-    this.dust = new Dust(this, -10, 22, 10)
+    this.dust = new Dust(this, 0, 24, 10)
   }
 
   _ai () {

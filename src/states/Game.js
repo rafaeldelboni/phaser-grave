@@ -45,17 +45,6 @@ export default class extends Phaser.State {
       'bg_graves_three',
       '#646464'
     )
-    this.floorLayerBg = this._createBackgroundLayer(
-      116,
-      32,
-      'floor',
-      'bg_grass'
-    )
-
-    for (let i = 0; i <= 320; i += 32) {
-      const wall = this.floorLayerBg.create(i, 148, 'atlas', 'wall_0')
-      wall.fixedToCamera = true
-    }
 
     Grave.factory(this.game, 25, 127, 2)
     Grave.factory(this.game, 75, 127, 0)
@@ -72,10 +61,24 @@ export default class extends Phaser.State {
     this.fences.add(new Fence(this.game, 1050, 127))
   }
 
+  _setFloor () {
+    this.floorLayerBg = this._createBackgroundLayer(
+      116,
+      32,
+      'floor',
+      'bg_grass'
+    )
+
+    for (let i = 0; i <= 320; i += 32) {
+      const wall = this.floorLayerBg.create(i, 148, 'atlas', 'wall_0')
+      wall.fixedToCamera = true
+    }
+  }
+
   create () {
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
-    // this._setBackground()
+    this._setBackground()
 
     this.skeleton = new Skeleton(
       this.game,
@@ -90,6 +93,8 @@ export default class extends Phaser.State {
       this.skeleton
     )
     this.enemies.push(this.knight)
+
+    this._setFloor()
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
@@ -110,16 +115,16 @@ export default class extends Phaser.State {
       this.fences
     )
 
-    /* this.cloudsBg.x = this.game.camera.x * 0.95
+    this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85
     this.secondLayerBg.x = this.game.camera.x * 0.65
-    this.thirdLayerBg.x = this.game.camera.x * 0.45 */
+    this.thirdLayerBg.x = this.game.camera.x * 0.45
   }
 
   render () {
     this.skeleton.render()
     this.knight.render()
-    /* this.fences.forEach(fence => fence.render()) */
+    this.fences.forEach(fence => fence.render())
     if (this.game.config.isDevelopment) {
       this.game.debug.spriteInfo(this.knight.sprite, 32, 32)
     }

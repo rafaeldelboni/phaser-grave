@@ -10,12 +10,10 @@ export default class extends Phaser.Particles.Arcade.Emitter {
     this.setXSpeed(0, 0)
     this.setYSpeed(0, 0)
     this.setRotation(0, 0)
-    this.setAlpha(1, 0.1, 500)
+    this.setAlpha(1, 0.1, 400)
     this.setScale(0.05, 0.1, 0.05, 0.1, 1000, Phaser.Easing.Quintic.Out)
-    this.gravity = -100
-    this.width = 15
-    this.lifespan = 300
-    this.frequency = 50
+    this.gravity = -80
+    this.width = 16
     this.forEach(particle => {
       particle.tint = 0x202020
     })
@@ -30,7 +28,7 @@ export default class extends Phaser.Particles.Arcade.Emitter {
   }
 
   start () {
-    this.start(false, 300, 50)
+    super.start(false, 300, 50)
   }
 
   stop () {

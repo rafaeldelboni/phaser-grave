@@ -3,6 +3,7 @@ import Animations from './helpers/Animations'
 import Controls from './helpers/Controls'
 
 import { types as stateTypes, Idle, Run, Roll, Attack, Hit } from './states'
+import { Dust } from '../particles'
 
 const attributes = {
   name: 'skeleton',
@@ -61,6 +62,7 @@ export default class Skeleton extends Actor {
       attributes.animations
     )
     this._setupBody()
+    this._setupParticles()
     this.controls = new Controls(this)
 
     super.initializeStates([
@@ -103,6 +105,10 @@ export default class Skeleton extends Actor {
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
 
     this.sprite.addChild(this.hitboxes)
+  }
+
+  _setupParticles () {
+    this.dust = new Dust(this, 0, 24, 10)
   }
 
   _run () {
