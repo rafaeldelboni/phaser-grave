@@ -75,7 +75,7 @@ export default class extends Phaser.State {
   create () {
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
-    this._setBackground()
+    // this._setBackground()
 
     this.skeleton = new Skeleton(
       this.game,
@@ -110,16 +110,16 @@ export default class extends Phaser.State {
       this.fences
     )
 
-    this.cloudsBg.x = this.game.camera.x * 0.95
+    /* this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85
     this.secondLayerBg.x = this.game.camera.x * 0.65
-    this.thirdLayerBg.x = this.game.camera.x * 0.45
+    this.thirdLayerBg.x = this.game.camera.x * 0.45 */
   }
 
   render () {
     this.skeleton.render()
     this.knight.render()
-    this.fences.forEach(fence => fence.render())
+    /* this.fences.forEach(fence => fence.render()) */
     if (this.game.config.isDevelopment) {
       this.game.debug.spriteInfo(this.knight.sprite, 32, 32)
     }

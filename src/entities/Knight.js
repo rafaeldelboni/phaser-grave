@@ -1,7 +1,9 @@
+import Phaser from 'phaser'
 import Actor from './Actor'
 import Animations from './helpers/Animations'
 
 import { types as stateTypes, Idle, Run, Attack, Hit } from './states'
+import { Dust } from '../particles'
 
 const attributes = {
   name: 'knight',
@@ -45,6 +47,7 @@ export default class Knight extends Actor {
       attributes.animations
     )
     this._setupBody()
+    this._setupParticles()
     this.controls = {}
 
     super.initializeStates([
@@ -73,8 +76,11 @@ export default class Knight extends Actor {
     torso.name = 'torso'
 
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
-
     this.sprite.addChild(this.hitboxes)
+  }
+
+  _setupParticles () {
+    this.dust = new Dust(this, -10, 22, 10)
   }
 
   _ai () {
