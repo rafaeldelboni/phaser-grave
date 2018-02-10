@@ -1,4 +1,3 @@
-import Phaser from 'phaser'
 import Actor from './Actor'
 import Animations from './helpers/Animations'
 
