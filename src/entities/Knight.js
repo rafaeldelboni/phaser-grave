@@ -2,7 +2,7 @@ import Actor from './Actor'
 import Animations from './helpers/Animations'
 
 import { types as stateTypes, Idle, Run, Attack, Hit } from './states'
-import { Dust } from '../particles'
+import { Dust, Spark } from '../particles'
 
 const attributes = {
   name: 'knight',
@@ -80,6 +80,7 @@ export default class Knight extends Actor {
 
   _setupParticles () {
     this.dust = new Dust(this, 0, 24, 10)
+    this.spark = new Spark(this, 0, 0, 15)
   }
 
   _ai () {

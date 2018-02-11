@@ -20,7 +20,7 @@ export default class Hit extends State {
     this.time = 0
   }
 
-  update () {
+  _generateDust () {
     if (this.actor.dust && this.attack.knockback) {
       if (this.time && !this.actor.dust.on) {
         this.actor.dust.start()
@@ -28,5 +28,22 @@ export default class Hit extends State {
         this.actor.dust.stop()
       }
     }
+  }
+
+  _generateSpark () {
+    if (this.actor.spark) {
+      if (this.time && !this.actor.spark.on) {
+        this.actor.spark.start()
+      }
+      if (this.time < 20 && this.actor.spark.on) {
+        console.log('stop', this.time)
+        this.actor.spark.stop()
+      }
+    }
+  }
+
+  update () {
+    this._generateDust()
+    this._generateSpark()
   }
 }
