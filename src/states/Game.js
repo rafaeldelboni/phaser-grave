@@ -69,10 +69,13 @@ export default class extends Phaser.State {
       'bg_grass'
     )
 
-    for (let i = 0; i <= 320; i += 32) {
-      const wall = this.floorLayerBg.create(i, 148, 'atlas', 'wall_0')
-      wall.fixedToCamera = true
-    }
+    this.underFloorwallBg = this._createBackgroundLayer(
+      148,
+      32,
+      'under_floor',
+      'wall_0'
+    )
+    this.underFloorwallBg.setAll('scale.y', 2)
   }
 
   create () {

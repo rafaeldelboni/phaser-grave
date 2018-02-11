@@ -27,6 +27,7 @@ const attributes = {
       cooldown: 5,
       damage: 10,
       knockback: 1,
+      shake: 1,
       combo: 15,
       next: 'attack_two'
     },
@@ -36,6 +37,7 @@ const attributes = {
       cooldown: 5,
       damage: 11,
       knockback: 1,
+      shake: 1,
       combo: 10,
       next: 'attack_three'
     },
@@ -44,7 +46,8 @@ const attributes = {
       duration: 65,
       cooldown: 10,
       damage: 6,
-      knockback: 15
+      knockback: 15,
+      shake: 1
     }
   ],
   hit: { duration: 34 }

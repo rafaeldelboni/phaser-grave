@@ -24,6 +24,7 @@ const attributes = {
       duration: 75,
       cooldown: 10,
       knockback: 1,
+      shake: 3,
       archorX: 0.25
     }
   ],
