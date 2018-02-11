@@ -8,14 +8,14 @@ export default class Actor {
     this.weight = 1
     this.direction = {}
     this.targets = []
+    this.controls = {}
+    this.dust = { start: () => {}, stop: () => {} }
+    this.spark = { start: () => {}, stop: () => {} }
 
     this.game.physics.arcade.enable(this.sprite)
     this.hitboxes = this.game.add.group()
     this.hitboxes.enableBody = true
     this.game.physics.arcade.enable(this.hitboxes)
-
-    this.dust = { start: () => {}, stop: () => {} }
-    this.spark = { start: () => {}, stop: () => {} }
   }
 
   _calculateStateTimes () {
@@ -121,6 +121,34 @@ export default class Actor {
   hit (damage) {
     if (this !== damage.striker && this.getState().type !== stateTypes.roll) {
       this.setState(stateTypes.hit, damage)
+    }
+  }
+
+  run (speed) {
+    if (this.controls.left && !this.controls.right) {
+      this.setState(stateTypes.run, {
+        side: 'left',
+        speed: speed
+      })
+    } else if (this.controls.right && !this.controls.left) {
+      this.setState(stateTypes.run, {
+        side: 'right',
+        speed: speed
+      })
+    } else {
+      this.setState(stateTypes.idle)
+    }
+  }
+
+  attack () {
+    if (this.controls.attack) {
+      this.setState(stateTypes.attack)
+    }
+  }
+
+  roll () {
+    if (this.controls.roll) {
+      this.setState(stateTypes.roll)
     }
   }
 

@@ -47,7 +47,6 @@ export default class Knight extends Actor {
     )
     this._setupBody()
     this._setupParticles()
-    this.controls = {}
 
     super.initializeStates([
       new Idle(this, attributes.idle),
@@ -110,41 +109,19 @@ export default class Knight extends Actor {
     }
   }
 
-  _run () {
-    if (this.controls.left && !this.controls.right) {
-      super.setState(stateTypes.run, {
-        side: 'left',
-        speed: attributes.run.speed
-      })
-    } else if (this.controls.right && !this.controls.left) {
-      super.setState(stateTypes.run, {
-        side: 'right',
-        speed: attributes.run.speed
-      })
-    } else {
-      super.setState(stateTypes.idle)
-    }
-  }
-
-  _attack () {
-    if (this.controls.attack) {
-      super.setState(stateTypes.attack)
-    }
-  }
-
   _handleStates () {
     switch (super.getState().type) {
       default:
       case stateTypes.idle:
-        this._run()
-        this._attack()
+        super.run(attributes.run.speed)
+        super.attack()
         break
       case stateTypes.run:
-        this._run()
-        this._attack()
+        super.run(attributes.run.speed)
+        super.attack()
         break
       case stateTypes.attack:
-        this._attack()
+        super.attack()
         break
       case stateTypes.hit:
         break
