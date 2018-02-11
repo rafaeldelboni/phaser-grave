@@ -7,19 +7,6 @@ export default class Hit extends State {
     this.attack = {}
   }
 
-  start ({ striker, attack }) {
-    this.attack = attack
-    this.time = this.hit.duration
-
-    this.actor.setVelocity(0)
-    this.actor.playAnimation('hitstun', this.hit.archorX)
-    this.actor.knockback(striker.sprite.x, attack.knockback)
-  }
-
-  stop () {
-    this.time = 0
-  }
-
   _generateDust () {
     if (this.actor.dust && this.attack.knockback) {
       if (this.time && !this.actor.dust.on) {
@@ -30,20 +17,36 @@ export default class Hit extends State {
     }
   }
 
-  _generateSpark () {
+  _startSpark () {
     if (this.actor.spark) {
-      if (this.time && !this.actor.spark.on) {
-        this.actor.spark.start()
-      }
-      if (this.time < 20 && this.actor.spark.on) {
-        console.log('stop', this.time)
+      this.actor.spark.start()
+    }
+  }
+
+  _stopSpark () {
+    if (this.actor.spark) {
+      if (this.time < 23 && this.actor.spark.on) {
         this.actor.spark.stop()
       }
     }
   }
 
+  start ({ striker, attack }) {
+    this.attack = attack
+    this.time = this.hit.duration
+
+    this.actor.setVelocity(0)
+    this.actor.playAnimation('hitstun', this.hit.archorX)
+    this.actor.knockback(striker.sprite.x, attack.knockback)
+    this._startSpark()
+  }
+
+  stop () {
+    this.time = 0
+  }
+
   update () {
     this._generateDust()
-    this._generateSpark()
+    this._stopSpark()
   }
 }

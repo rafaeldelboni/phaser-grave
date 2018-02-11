@@ -32,6 +32,7 @@ export default class extends Phaser.Particles.Arcade.Emitter {
   }
 
   start () {
+    this.actor.game.camera.flash(0xffffff, 75)
     super.start(false, 200, 10)
   }
 
