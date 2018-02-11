@@ -13,6 +13,9 @@ export default class Actor {
     this.hitboxes = this.game.add.group()
     this.hitboxes.enableBody = true
     this.game.physics.arcade.enable(this.hitboxes)
+
+    this.dust = { start: () => {}, stop: () => {} }
+    this.spark = { start: () => {}, stop: () => {} }
   }
 
   _calculateStateTimes () {
