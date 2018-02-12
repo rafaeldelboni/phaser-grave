@@ -1,11 +1,12 @@
 import Actor from './Actor'
 import Animations from './helpers/Animations'
 
-import { types as stateTypes, Idle, Run, Attack, Hit } from './states'
+import { types as stateTypes, Idle, Run, Attack, Hit, Die } from './states'
 import { Dust, Spark } from '../particles'
 
 const attributes = {
   name: 'knight',
+  health: 5,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -29,6 +30,7 @@ const attributes = {
     }
   ],
   hit: { duration: 34 },
+  die: { duration: 80, archorX: 0.25, type: { animation: 'die' } },
   ai: {
     attackRange: 1600
   }
@@ -41,6 +43,7 @@ export default class Knight extends Actor {
     this.player = player
     this.name = attributes.name
     this.weight = attributes.weight
+    this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
       this.name,
       this.sprite.animations,
@@ -53,7 +56,8 @@ export default class Knight extends Actor {
       new Idle(this, attributes.idle),
       new Run(this, attributes.run),
       new Attack(this, attributes.attacks),
-      new Hit(this, attributes.hit)
+      new Hit(this, attributes.hit),
+      new Die(this, attributes.die)
     ])
 
     this.playAnimation('idle', attributes.idle.archorX)
@@ -86,6 +90,9 @@ export default class Knight extends Actor {
   _ai () {
     this.controls = {}
     const player = this.player.sprite
+
+    if (!player.alive) return
+
     const playerDistance = this.game.math.distanceSq(
       this.sprite.x,
       0,
@@ -125,6 +132,7 @@ export default class Knight extends Actor {
         super.attack()
         break
       case stateTypes.hit:
+      case stateTypes.die:
         break
     }
   }

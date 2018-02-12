@@ -69,6 +69,10 @@ export default class Actor {
   setState (newStateType, parameters) {
     const current = this.getState()
 
+    if (!this.alive && newStateType !== stateTypes.die) {
+      return
+    }
+
     if (newStateType.mandatory) {
       this.states.map(state => state.stop())
     }
@@ -118,10 +122,48 @@ export default class Actor {
     )
   }
 
+  get alive () {
+    return this.sprite.alive
+  }
+
+  get health () {
+    return this.sprite.health
+  }
+
+  heal (amount) {
+    return this.sprite.heal(amount)
+  }
+
+  setHealth (amount) {
+    return this.sprite.setHealth(amount)
+  }
+
+  damage (amount) {
+    if (this.sprite.health - amount <= 0) {
+      this.sprite.health = 0
+      this.die()
+    } else {
+      this.sprite.damage(amount)
+    }
+  }
+
+  destroy () {
+    this.sprite.kill()
+    return this.sprite.destroy()
+  }
+
   hit (damage) {
-    if (this !== damage.striker && this.getState().type !== stateTypes.roll) {
+    if (
+      this !== damage.striker &&
+      this.getState().type !== stateTypes.roll &&
+      this.health > 0
+    ) {
       this.setState(stateTypes.hit, damage)
     }
+  }
+
+  die () {
+    this.setState(stateTypes.die)
   }
 
   run (speed) {

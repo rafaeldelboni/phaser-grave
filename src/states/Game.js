@@ -78,6 +78,15 @@ export default class extends Phaser.State {
     this.underFloorwallBg.setAll('scale.y', 2)
   }
 
+  _cleanKilledEnemies () {
+    this.enemies = this.enemies.reduce((accumulator, current) => {
+      if (current.alive) {
+        accumulator.push(current)
+      }
+      return accumulator
+    }, [])
+  }
+
   create () {
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
@@ -122,6 +131,8 @@ export default class extends Phaser.State {
     this.firstLayerBg.x = this.game.camera.x * 0.85
     this.secondLayerBg.x = this.game.camera.x * 0.65
     this.thirdLayerBg.x = this.game.camera.x * 0.45
+
+    this._cleanKilledEnemies()
   }
 
   render () {
@@ -129,7 +140,8 @@ export default class extends Phaser.State {
     this.knight.render()
     this.fences.forEach(fence => fence.render())
     if (this.game.config.isDevelopment) {
-      this.game.debug.spriteInfo(this.knight.sprite, 32, 32)
+      this.skeleton.sprite.alive &&
+        this.game.debug.spriteInfo(this.skeleton.sprite, 32, 32)
     }
   }
 }

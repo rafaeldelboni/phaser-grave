@@ -2,11 +2,20 @@ import Actor from './Actor'
 import Animations from './helpers/Animations'
 import Controls from './helpers/Controls'
 
-import { types as stateTypes, Idle, Run, Roll, Attack, Hit } from './states'
+import {
+  types as stateTypes,
+  Idle,
+  Run,
+  Roll,
+  Attack,
+  Hit,
+  Die
+} from './states'
 import { Dust } from '../particles'
 
 const attributes = {
   name: 'skeleton',
+  health: 5,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -50,7 +59,8 @@ const attributes = {
       shake: 1
     }
   ],
-  hit: { duration: 34 }
+  hit: { duration: 34 },
+  die: { duration: 40, type: { particle: 'bones' } }
 }
 
 export default class Skeleton extends Actor {
@@ -59,6 +69,7 @@ export default class Skeleton extends Actor {
     this.game = game
     this.name = attributes.name
     this.weight = attributes.weight
+    this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
       this.name,
       this.sprite.animations,
@@ -73,7 +84,8 @@ export default class Skeleton extends Actor {
       new Run(this, attributes.run),
       new Roll(this, attributes.roll),
       new Attack(this, attributes.attacks),
-      new Hit(this, attributes.hit)
+      new Hit(this, attributes.hit),
+      new Die(this, attributes.die)
     ])
 
     this.playAnimation('idle', attributes.idle.archorX)
@@ -131,6 +143,8 @@ export default class Skeleton extends Actor {
         super.attack()
         break
       case stateTypes.roll:
+      case stateTypes.hit:
+      case stateTypes.die:
         break
     }
   }
