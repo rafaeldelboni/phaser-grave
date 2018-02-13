@@ -17,7 +17,13 @@ export default class Die extends State {
 
   _particle (name) {
     this.actor.sprite.alpha = 0
-    // TODO: switch through possible death particles (feather, bones)
+    // TODO: death particles feather
+    switch (name) {
+      case 'bones':
+        this.actor.bones.start()
+        break
+    }
+    this.actor.destroy()
   }
 
   start () {

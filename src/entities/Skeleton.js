@@ -1,7 +1,6 @@
 import Actor from './Actor'
 import Animations from './helpers/Animations'
 import Controls from './helpers/Controls'
-
 import {
   types as stateTypes,
   Idle,
@@ -11,11 +10,11 @@ import {
   Hit,
   Die
 } from './states'
-import { Dust } from '../particles'
+import { Dust, Bones } from '../particles'
 
 const attributes = {
   name: 'skeleton',
-  health: 5,
+  health: 2,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -59,7 +58,7 @@ const attributes = {
       shake: 1
     }
   ],
-  hit: { duration: 34 },
+  hit: { duration: 30 },
   die: { duration: 40, type: { particle: 'bones' } }
 }
 
@@ -124,6 +123,7 @@ export default class Skeleton extends Actor {
 
   _setupParticles () {
     this.dust = new Dust(this, 0, 24, 10)
+    this.bones = new Bones(this, 0, 10)
   }
 
   _handleStates () {
@@ -151,6 +151,7 @@ export default class Skeleton extends Actor {
 
   update (targets) {
     super.update()
+    this.game.physics.arcade.collide(this.bones)
     this.targets = targets
     this._handleStates()
   }

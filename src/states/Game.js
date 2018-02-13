@@ -6,11 +6,14 @@ export default class extends Phaser.State {
   init () {}
   preload () {}
 
-  _createBackgroundLayer (positionY, sizeX, name, file, color) {
+  _createBackgroundLayer (positionY, sizeX, name, file, color, body) {
     const layer = this.game.add.group(this.world, name)
     for (let i = 0; i <= 1280; i += sizeX) {
       const sprite = this.game.add.sprite(i, positionY, 'atlas', file)
       sprite.tint = color ? Phaser.Color.hexToRGB(color) : 0xffffff
+      if (body) {
+        this.game.physics.arcade.enable(sprite)
+      }
       layer.add(sprite)
     }
     return layer
@@ -73,9 +76,14 @@ export default class extends Phaser.State {
       148,
       32,
       'under_floor',
-      'wall_0'
+      'wall_0',
+      null,
+      true
     )
     this.underFloorwallBg.setAll('scale.y', 2)
+    this.underFloorwallBg.setAll('body.collideWorldBounds', true)
+    this.underFloorwallBg.setAll('body.immovable', true)
+    this.underFloorwallBg.callAll('body.setSize', 'body', 32, 1)
   }
 
   _cleanKilledEnemies () {
@@ -126,6 +134,7 @@ export default class extends Phaser.State {
       this.enemies.map(enemie => enemie.sprite),
       this.fences
     )
+    this.game.physics.arcade.collide(this.skeleton.bones, this.underFloorwallBg)
 
     this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85
@@ -140,6 +149,7 @@ export default class extends Phaser.State {
     this.knight.render()
     this.fences.forEach(fence => fence.render())
     if (this.game.config.isDevelopment) {
+      this.underFloorwallBg.forEach(wall => this.game.debug.body(wall))
       this.skeleton.sprite.alive &&
         this.game.debug.spriteInfo(this.skeleton.sprite, 32, 32)
     }
