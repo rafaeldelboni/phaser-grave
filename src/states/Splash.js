@@ -22,6 +22,11 @@ export default class extends Phaser.State {
     this.load.setPreloadSprite(this.loaderBar)
 
     // load your assets
+    this.load.bitmapFont(
+      'carrierCommand',
+      'assets/fonts/carrier_command.png',
+      'assets/fonts/carrier_command.xml'
+    )
     this.load.atlas('atlas', atlasPng, atlasJson)
   }
 

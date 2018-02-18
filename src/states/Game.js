@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { Fence, Grave } from '../objects'
 import { Knight, Skeleton } from '../entities'
+import { TextBox } from '../ui'
 
 export default class extends Phaser.State {
   init () {}
@@ -115,6 +116,8 @@ export default class extends Phaser.State {
 
     this._setFloor()
 
+    this.killCounter = new TextBox(this.game, 'Kills: 0')
+
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
       this.player.sprite,
@@ -141,6 +144,7 @@ export default class extends Phaser.State {
     this.thirdLayerBg.x = this.game.camera.x * 0.45
 
     this._cleanKilledEnemies()
+    this.killCounter.update(`Kills: ${this.player.killCount}`)
   }
 
   render () {
