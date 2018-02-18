@@ -22,6 +22,7 @@ export default class Hit extends State {
 
   start ({ striker, attack }) {
     this.attack = attack
+    this.striker = striker
     this.damage = 1
     this.time = this.hit.duration
 
@@ -42,7 +43,7 @@ export default class Hit extends State {
     this._stopDust()
     this._stopSpark()
     if (this.time < 10 && this.damage) {
-      this.actor.damage(this.damage)
+      this.actor.damage(this.damage, this.striker)
       this.damage = 0
     }
   }

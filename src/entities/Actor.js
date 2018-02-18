@@ -9,6 +9,7 @@ export default class Actor {
     this.direction = {}
     this.targets = []
     this.controls = {}
+    this.killCount = 0
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
 
@@ -143,10 +144,10 @@ export default class Actor {
     this.healthBar.change()
   }
 
-  damage (amount) {
+  damage (amount, striker) {
     if (this.sprite.health - amount <= 0) {
       this.sprite.health = 0
-      this.die()
+      this.die(striker)
     } else {
       this.sprite.damage(amount)
     }
@@ -168,8 +169,8 @@ export default class Actor {
     }
   }
 
-  die () {
-    this.setState(stateTypes.die)
+  die (striker) {
+    this.setState(stateTypes.die, striker)
   }
 
   run (speed) {

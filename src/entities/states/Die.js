@@ -26,7 +26,7 @@ export default class Die extends State {
     this.actor.destroy()
   }
 
-  start () {
+  start (striker) {
     this.time = this.die.duration
     this.dying = true
 
@@ -37,6 +37,8 @@ export default class Die extends State {
     } else {
       this._particle(this.die.type.particle)
     }
+
+    striker.killCount++
   }
 
   stop () {

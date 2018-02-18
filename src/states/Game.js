@@ -100,7 +100,7 @@ export default class extends Phaser.State {
     this.game.stage.smoothing = false
     this._setBackground()
 
-    this.skeleton = new Skeleton(
+    this.player = new Skeleton(
       this.game,
       this.game.add.sprite(300, 123, 'atlas', '')
     )
@@ -109,7 +109,7 @@ export default class extends Phaser.State {
     this.knight = new Knight(
       this.game,
       this.game.add.sprite(350, 123, 'atlas', ''),
-      this.skeleton
+      this.player
     )
     this.enemies.push(this.knight)
 
@@ -117,7 +117,7 @@ export default class extends Phaser.State {
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
-      this.skeleton.sprite,
+      this.player.sprite,
       Phaser.Camera.FOLLOW_LOCKON,
       0.1,
       0.1
@@ -125,15 +125,15 @@ export default class extends Phaser.State {
   }
 
   update () {
-    this.skeleton.update(this.enemies)
-    this.knight.update(this.enemies.concat([this.skeleton]))
+    this.player.update(this.enemies)
+    this.knight.update(this.enemies.concat([this.player]))
 
-    this.game.physics.arcade.collide(this.skeleton.sprite, this.fences)
+    this.game.physics.arcade.collide(this.player.sprite, this.fences)
     this.game.physics.arcade.collide(
       this.enemies.map(enemie => enemie.sprite),
       this.fences
     )
-    this.game.physics.arcade.collide(this.skeleton.bones, this.underFloorwallBg)
+    this.game.physics.arcade.collide(this.player.bones, this.underFloorwallBg)
 
     this.cloudsBg.x = this.game.camera.x * 0.95
     this.firstLayerBg.x = this.game.camera.x * 0.85
@@ -144,13 +144,13 @@ export default class extends Phaser.State {
   }
 
   render () {
-    this.skeleton.render()
+    this.player.render()
     this.knight.render()
     this.fences.forEach(fence => fence.render())
     if (this.game.config.isDevelopment) {
       this.underFloorwallBg.forEach(wall => this.game.debug.body(wall))
-      this.skeleton.sprite.alive &&
-        this.game.debug.spriteInfo(this.skeleton.sprite, 32, 32)
+      this.player.sprite.alive &&
+        this.game.debug.spriteInfo(this.player.sprite, 32, 32)
     }
   }
 }

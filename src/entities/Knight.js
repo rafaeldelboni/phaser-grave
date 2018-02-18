@@ -7,7 +7,7 @@ import { HealthBar } from '../ui'
 
 const attributes = {
   name: 'knight',
-  health: 10,
+  health: 4,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
