@@ -41,8 +41,7 @@ export default class Hit extends State {
   update () {
     this._stopDust()
     this._stopSpark()
-
-    if (this.time < 5 && this.damage) {
+    if (this.time < 10 && this.damage) {
       this.actor.damage(this.damage)
       this.damage = 0
     }

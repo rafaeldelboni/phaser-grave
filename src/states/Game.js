@@ -106,7 +106,6 @@ export default class extends Phaser.State {
     )
 
     this.enemies = []
-
     this.knight = new Knight(
       this.game,
       this.game.add.sprite(350, 123, 'atlas', ''),

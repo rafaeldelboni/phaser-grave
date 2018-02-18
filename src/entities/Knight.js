@@ -3,10 +3,11 @@ import Animations from './helpers/Animations'
 
 import { types as stateTypes, Idle, Run, Attack, Hit, Die } from './states'
 import { Dust, Spark } from '../particles'
+import { HealthBar } from '../ui'
 
 const attributes = {
   name: 'knight',
-  health: 5,
+  health: 10,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -23,6 +24,7 @@ const attributes = {
     {
       name: 'attack',
       duration: 75,
+      hitFrame: 35,
       cooldown: 10,
       knockback: 1,
       shake: 3,
@@ -33,6 +35,11 @@ const attributes = {
   die: { duration: 80, archorX: 0.25, type: { animation: 'die' } },
   ai: {
     attackRange: 1600
+  },
+  healthBar: {
+    width: 25,
+    height: 2,
+    y: 105
   }
 }
 
@@ -80,6 +87,8 @@ export default class Knight extends Actor {
 
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
     this.sprite.addChild(this.hitboxes)
+
+    this.healthBar = new HealthBar(this, attributes.healthBar)
   }
 
   _setupParticles () {

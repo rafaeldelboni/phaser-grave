@@ -12,6 +12,8 @@ export default class Actor {
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
 
+    this.healthBar = { change: () => {}, update: () => {} }
+
     this.game.physics.arcade.enable(this.sprite)
     this.hitboxes = this.game.add.group()
     this.hitboxes.enableBody = true
@@ -131,11 +133,14 @@ export default class Actor {
   }
 
   heal (amount) {
-    return this.sprite.heal(amount)
+    this.sprite.heal(amount)
+    this.healthBar.change()
   }
 
   setHealth (amount) {
-    return this.sprite.setHealth(amount)
+    this.sprite.maxHealth = amount
+    this.sprite.setHealth(amount)
+    this.healthBar.change()
   }
 
   damage (amount) {
@@ -145,6 +150,7 @@ export default class Actor {
     } else {
       this.sprite.damage(amount)
     }
+    this.healthBar.change()
   }
 
   destroy () {
@@ -195,6 +201,7 @@ export default class Actor {
   }
 
   update () {
+    this.healthBar.update()
     this._calculateStateTimes()
   }
 

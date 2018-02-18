@@ -11,6 +11,7 @@ import {
   Die
 } from './states'
 import { Dust, Bones } from '../particles'
+import { HealthBar } from '../ui'
 
 const attributes = {
   name: 'skeleton',
@@ -32,6 +33,7 @@ const attributes = {
     {
       name: 'attack_one',
       duration: 35,
+      hitFrame: 15,
       cooldown: 5,
       damage: 10,
       knockback: 1,
@@ -42,6 +44,7 @@ const attributes = {
     {
       name: 'attack_two',
       duration: 35,
+      hitFrame: 15,
       cooldown: 5,
       damage: 11,
       knockback: 1,
@@ -52,6 +55,7 @@ const attributes = {
     {
       name: 'attack_three',
       duration: 65,
+      hitFrame: 31,
       cooldown: 10,
       damage: 6,
       knockback: 15,
@@ -59,7 +63,15 @@ const attributes = {
     }
   ],
   hit: { duration: 30 },
-  die: { duration: 40, type: { particle: 'bones' } }
+  die: { duration: 40, type: { particle: 'bones' } },
+  healthBar: {
+    x: 10,
+    y: 10,
+    width: 200,
+    height: 6,
+    fixedToCamera: true,
+    visible: true
+  }
 }
 
 export default class Skeleton extends Actor {
@@ -119,6 +131,8 @@ export default class Skeleton extends Actor {
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
 
     this.sprite.addChild(this.hitboxes)
+
+    this.healthBar = new HealthBar(this, attributes.healthBar)
   }
 
   _setupParticles () {

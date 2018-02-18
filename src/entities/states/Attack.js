@@ -53,7 +53,7 @@ export default class Attack extends State {
   }
 
   update () {
-    if (this.time === Math.round(this.current.duration / 2)) {
+    if (this.time === this.current.hitFrame) {
       this._damage()
     }
   }
