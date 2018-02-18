@@ -24,8 +24,8 @@ export default class extends Phaser.State {
     // load your assets
     this.load.bitmapFont(
       'carrierCommand',
-      'assets/fonts/carrier_command.png',
-      'assets/fonts/carrier_command.xml'
+      './assets/fonts/carrier_command.png',
+      './assets/fonts/carrier_command.xml'
     )
     this.load.atlas('atlas', atlasPng, atlasJson)
   }
