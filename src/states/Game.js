@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { Fence, Grave } from '../objects'
+import { Experience, Fence, Grave } from '../objects'
 import { Knight, Skeleton } from '../entities'
 import { TextBox } from '../ui'
 
@@ -106,6 +106,8 @@ export default class extends Phaser.State {
       this.game.add.sprite(300, 123, 'atlas', '')
     )
 
+    this.killCounter = new TextBox(this.game, 'Kills: 0')
+
     this.enemies = []
     this.knight = new Knight(
       this.game,
@@ -116,7 +118,9 @@ export default class extends Phaser.State {
 
     this._setFloor()
 
-    this.killCounter = new TextBox(this.game, 'Kills: 0')
+    this.experiences = this.game.add.group(this.world, 'experience')
+    this.experiences.add(new Experience(this.player, 200, 100))
+    this.experiences.add(new Experience(this.player, 200, 100))
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
