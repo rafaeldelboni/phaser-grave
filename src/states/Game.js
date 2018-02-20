@@ -1,12 +1,9 @@
 import Phaser from 'phaser'
-import { Experience, Fence, Grave } from '../objects'
+import { Fence, Grave } from '../objects'
 import { Knight, Skeleton } from '../entities'
 import { TextBox } from '../ui'
 
 export default class extends Phaser.State {
-  init () {}
-  preload () {}
-
   _createBackgroundLayer (positionY, sizeX, name, file, color, body) {
     const layer = this.game.add.group(this.world, name)
     for (let i = 0; i <= 1280; i += sizeX) {
@@ -96,31 +93,30 @@ export default class extends Phaser.State {
     }, [])
   }
 
-  create () {
+  init () {
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
-    this._setBackground()
+    this.enemies = []
+  }
 
+  preload () {
+    this._setBackground()
+    this._setFloor()
+    this.killCounter = new TextBox(this.game, 'Kills: 0')
+  }
+
+  create () {
     this.player = new Skeleton(
       this.game,
       this.game.add.sprite(300, 123, 'atlas', '')
     )
 
-    this.killCounter = new TextBox(this.game, 'Kills: 0')
-
-    this.enemies = []
     this.knight = new Knight(
       this.game,
       this.game.add.sprite(350, 123, 'atlas', ''),
       this.player
     )
     this.enemies.push(this.knight)
-
-    this._setFloor()
-
-    this.experiences = this.game.add.group(this.world, 'experience')
-    this.experiences.add(new Experience(this.player, 200, 100))
-    this.experiences.add(new Experience(this.player, 200, 100))
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
@@ -129,6 +125,8 @@ export default class extends Phaser.State {
       0.1,
       0.1
     )
+
+    this.experiences = this.game.add.group(this.world, 'experience')
   }
 
   update () {

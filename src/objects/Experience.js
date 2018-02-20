@@ -1,14 +1,11 @@
 import Phaser from 'phaser'
 
+const veryRandom = multiplier =>
+  Math.random() * multiplier * (Math.random() < 0.5 ? -1 : 1)
+
 export default class extends Phaser.Sprite {
   constructor (actor, x, y) {
-    super(
-      actor.game,
-      x * Math.random() * 0.2,
-      y * Math.random() * 0.2,
-      'atlas',
-      'expr_0'
-    )
+    super(actor.game, x + veryRandom(15), y + veryRandom(15), 'atlas', 'expr_0')
     this.actor = actor
     this.anchor.setTo(0.5)
     this.game.physics.arcade.enable(this)
@@ -41,5 +38,15 @@ export default class extends Phaser.Sprite {
     if (this.game.config.isDevelopment) {
       this.game.debug.body(this)
     }
+  }
+
+  static factory (actorOrigin, actorDestiny, quantity = 1) {
+    const experiences = []
+    for (let i = 0; i < quantity; i++) {
+      experiences.push(
+        new this(actorDestiny, actorOrigin.sprite.x, actorOrigin.sprite.y)
+      )
+    }
+    return experiences
   }
 }

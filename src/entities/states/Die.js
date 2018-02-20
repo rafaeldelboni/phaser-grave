@@ -1,11 +1,13 @@
 import Phaser from 'phaser'
 import { State, types } from './'
+import { Experience } from '../../objects'
 
 export default class Die extends State {
   constructor (actor, die) {
     super(actor, types.die)
     this.die = die
     this.dying = false
+    this.stage = actor.game.state.states.Game
   }
 
   _animation (name) {
@@ -29,6 +31,7 @@ export default class Die extends State {
   start (striker) {
     this.time = this.die.duration
     this.dying = true
+    this.striker = striker
 
     this.actor.setVelocity(0)
 
@@ -47,7 +50,12 @@ export default class Die extends State {
   }
 
   update () {
-    if (this.dying && this.time <= 1) {
+    if (this.dying && this.time === 1) {
+      if (this.actor.name !== 'skeleton') {
+        this.stage.experiences.addMultiple(
+          Experience.factory(this.actor, this.striker, this.actor.experience)
+        )
+      }
       this.actor.destroy()
     }
   }

@@ -7,6 +7,7 @@ import { HealthBar } from '../ui'
 
 const attributes = {
   name: 'knight',
+  experience: 4,
   health: 4,
   weight: 1,
   animations: [
@@ -49,6 +50,7 @@ export default class Knight extends Actor {
     this.game = game
     this.player = player
     this.name = attributes.name
+    this.experience = attributes.experience
     this.weight = attributes.weight
     this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
