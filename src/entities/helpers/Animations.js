@@ -6,7 +6,7 @@ export default class Animations {
       [animation.name]: spriteAnimations.add(
         animation.name,
         Phaser.Animation.generateFrameNames(
-          `${spriteName}_${animation.name}_`,
+          animation.spriteName || `${spriteName}_${animation.name}_`,
           animation.start,
           animation.stop
         ),

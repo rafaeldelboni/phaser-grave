@@ -17,15 +17,31 @@ export default class Die extends State {
       .to({ alpha: 0 }, 1250, Phaser.Easing.Quintic.None, true)
   }
 
+  _spawExperience () {
+    if (this.actor.name !== 'skeleton') {
+      this.stage.experiences.addMultiple(
+        Experience.factory(this.actor, this.striker, this.actor.experience)
+      )
+    }
+  }
+
+  _destroy () {
+    this._spawExperience()
+    this.actor.destroy()
+  }
+
   _particle (name) {
     this.actor.sprite.alpha = 0
-    // TODO: death particles feather
     switch (name) {
       case 'bones':
         this.actor.bones.start()
         break
+      case 'feathers':
+        // TODO: death particles feather
+        this.actor.feathers.start()
+        break
     }
-    this.actor.destroy()
+    this._destroy()
   }
 
   start (striker) {
@@ -51,12 +67,7 @@ export default class Die extends State {
 
   update () {
     if (this.dying && this.time === 1) {
-      if (this.actor.name !== 'skeleton') {
-        this.stage.experiences.addMultiple(
-          Experience.factory(this.actor, this.striker, this.actor.experience)
-        )
-      }
-      this.actor.destroy()
+      this._destroy()
     }
   }
 }

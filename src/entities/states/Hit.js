@@ -27,7 +27,7 @@ export default class Hit extends State {
     this.time = this.hit.duration
 
     this.actor.setVelocity(0)
-    this.actor.playAnimation('hitstun', this.hit.archorX)
+    this.actor.playAnimation(this.hit.animation || 'hitstun', this.hit.archorX)
     this.actor.knockback(striker.sprite.x, attack.knockback)
 
     this.actor.game.camera.shake(0.01 * attack.shake, 100 * attack.shake)

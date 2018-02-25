@@ -189,7 +189,9 @@ export default class Actor {
         speed: speed
       })
     } else {
-      this.setState(stateTypes.idle)
+      if (this.states.find(state => state.type === stateTypes.idle)) {
+        this.setState(stateTypes.idle)
+      }
     }
   }
 

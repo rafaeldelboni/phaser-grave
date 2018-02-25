@@ -42,7 +42,9 @@ export default class Attack extends State {
       this.cooldown = attack.cooldown
       this.combo = attack.combo
 
-      this.actor.setVelocity(0)
+      if (!attack.canMove) {
+        this.actor.setVelocity(0)
+      }
       this.actor.playAnimation(attack.name, attack.archorX)
     }
   }
