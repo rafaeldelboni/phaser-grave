@@ -10,6 +10,7 @@ export default class Actor {
     this.targets = []
     this.controls = {}
     this.killCount = 0
+    this.experiencePoints = 0
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
 
@@ -56,7 +57,9 @@ export default class Actor {
   }
 
   getHitbox (name) {
-    return this.hitboxes.children.find(hitbox => hitbox.name === name)
+    const hitbox = this.hitboxes.children.find(hitbox => hitbox.name === name)
+    hitbox.actor = this
+    return hitbox
   }
 
   initializeStates (states) {

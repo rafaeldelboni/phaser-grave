@@ -86,7 +86,7 @@ export default class extends Phaser.State {
 
   _cleanKilledEnemies () {
     this.enemies = this.enemies.reduce((accumulator, current) => {
-      if (current.alive) {
+      if (current.sprite.renderable) {
         accumulator.push(current)
       }
       return accumulator
@@ -131,7 +131,20 @@ export default class extends Phaser.State {
 
   update () {
     this.player.update(this.enemies)
-    this.knight.update(this.enemies.concat([this.player]))
+    for (const enemie of this.enemies) {
+      enemie.update(this.enemies.concat([this.player]))
+    }
+
+    this.game.physics.arcade.collide(
+      this.player.getHitbox('torso'),
+      this.experiences,
+      null,
+      (playerTorso, experience) => {
+        playerTorso.actor.experiencePoints++
+        experience.destroy()
+        return false
+      }
+    )
 
     this.game.physics.arcade.collide(this.player.sprite, this.fences)
     this.game.physics.arcade.collide(
@@ -153,6 +166,7 @@ export default class extends Phaser.State {
     this.player.render()
     this.knight.render()
     this.fences.forEach(fence => fence.render())
+    this.experiences.forEach(experience => experience.render())
     if (this.game.config.isDevelopment) {
       this.underFloorwallBg.forEach(wall => this.game.debug.body(wall))
       this.player.sprite.alive &&
