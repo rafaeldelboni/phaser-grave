@@ -57,7 +57,8 @@ export default class Actor {
   }
 
   getHitbox (name) {
-    const hitbox = this.hitboxes.children.find(hitbox => hitbox.name === name)
+    const hitbox =
+      this.hitboxes.children.find(hitbox => hitbox.name === name) || {}
     hitbox.actor = this
     return hitbox
   }
