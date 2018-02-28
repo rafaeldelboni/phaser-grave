@@ -15,17 +15,16 @@ const attributes = {
       spriteName: 'crow_',
       start: 0,
       stop: 4,
-      speed: 15,
+      speed: 10,
       loop: true
     }
   ],
-  run: { speed: 125, archorX: 0.45, animation: 'crow' },
+  run: { speed: 110, archorX: 0.45, animation: 'crow' },
   attacks: [
     {
       name: 'crow',
-      duration: 10,
-      hitFrame: 5,
-      cooldown: 0,
+      duration: 2,
+      hitFrame: 1,
       knockback: 1,
       shake: 1,
       canMove: true
@@ -34,7 +33,7 @@ const attributes = {
   hit: { duration: 1, animation: 'crow' },
   die: { duration: 1, type: { particle: 'feathers' } },
   ai: {
-    attackRange: 1600
+    attackRange: 10
   }
 }
 
@@ -63,21 +62,22 @@ export default class Crow extends Actor {
     ])
 
     this.playAnimation('crow', attributes.run.archorX)
-    this.faceLeft()
+    this.initialDirection =
+      this.sprite.x > this.player.sprite.x ? 'left' : 'right'
   }
 
   _setupBody () {
-    this.sprite.body.setSize(20, 8, 13, 40)
-    this.sprite.body.collideWorldBounds = true
+    this.sprite.body.setSize(0)
+    this.sprite.body.checkCollision.none = true
 
     const attack = this.hitboxes.create(0, 0, null)
     attack.anchor.set(0.5)
-    attack.body.setSize(35, 28, 21, 8)
-    attack.name = 'attack'
+    attack.body.setSize(5, 25, 12, 0)
+    attack.name = 'crow'
 
     const torso = this.hitboxes.create(0, 0, null)
     torso.anchor.set(0.5)
-    torso.body.setSize(18, 25, 15, 8)
+    torso.body.setSize(25, 25, 5, 0)
     torso.name = 'torso'
 
     this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
@@ -85,33 +85,26 @@ export default class Crow extends Actor {
   }
 
   _ai () {
-    // TODO: crow moving attack and flee
     this.controls = {}
-    const player = this.player.sprite
 
-    if (!player.alive) return
+    this.controls[this.initialDirection] = true
+    if (this.lastTargetHit) {
+      this.controls.up = true
+      return
+    }
 
     const playerDistance = this.game.math.distanceSq(
       this.sprite.x,
       0,
-      player.x,
+      this.player.sprite.x,
       0
     )
-    const playerDirection = this.sprite.x > player.x ? 'left' : 'right'
-    if (playerDistance > attributes.ai.attackRange) {
-      this.controls[playerDirection] = true
-    } else {
-      if (this.direction.name !== playerDirection) {
-        this.controls[playerDirection] = true
-      } else {
-        const attack = this.states.find(
-          state => state.type === stateTypes.attack
-        )
+    if (playerDistance <= attributes.ai.attackRange) {
+      this.controls.attack = true
+    }
 
-        if (!attack.cooldown) {
-          this.controls.attack = true
-        }
-      }
+    if (this.alive && this.sprite.body.checkWorldBounds()) {
+      this.destroy()
     }
   }
 

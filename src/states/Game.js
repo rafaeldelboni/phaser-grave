@@ -120,7 +120,7 @@ export default class extends Phaser.State {
 
     this.crow = new Crow(
       this.game,
-      this.game.add.sprite(450, 123, 'atlas', ''),
+      this.game.add.sprite(450, 130, 'atlas', ''),
       this.player
     )
     this.enemies.push(this.crow)
@@ -171,7 +171,7 @@ export default class extends Phaser.State {
 
   render () {
     this.player.render()
-    this.knight.render()
+    this.enemies.forEach(enemie => enemie.render())
     this.fences.forEach(fence => fence.render())
     this.experiences.forEach(experience => experience.render())
     if (this.game.config.isDevelopment) {

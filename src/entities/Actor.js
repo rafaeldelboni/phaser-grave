@@ -13,6 +13,7 @@ export default class Actor {
     this.experiencePoints = 0
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
+    this.lastTargetHit = null
 
     this.healthBar = { change: () => {}, update: () => {} }
 
@@ -33,27 +34,26 @@ export default class Actor {
     })
   }
 
-  _face (xFactor) {
+  face (xFactor) {
     this.sprite.scale.x = xFactor
     for (const h of this.hitboxes.children) {
       h.scale.x = xFactor
     }
+    this.direction = {
+      name: xFactor === 1 ? 'right' : 'left',
+      factor: xFactor
+    }
     return xFactor
-  }
-
-  face (direction) {
-    this.direction = { name: direction, factor: direction === 'right' ? 1 : -1 }
-    return this._face(this.direction.factor)
   }
 
   faceLeft () {
     this.direction = { name: 'left', factor: -1 }
-    return this._face(this.direction.factor)
+    return this.face(this.direction.factor)
   }
 
   faceRight () {
     this.direction = { name: 'right', factor: 1 }
-    return this._face(this.direction.factor)
+    return this.face(this.direction.factor)
   }
 
   getHitbox (name) {
@@ -178,14 +178,23 @@ export default class Actor {
   }
 
   run (speed) {
-    if (this.controls.left && !this.controls.right) {
+    let direction = { x: 0, y: 0 }
+
+    if (this.controls.left) {
+      direction.x = -1
+    } else if (this.controls.right) {
+      direction.x = 1
+    }
+
+    if (this.controls.up) {
+      direction.y = -1
+    } else if (this.controls.down) {
+      direction.y = 1
+    }
+
+    if (direction.x !== 0 || direction.y !== 0) {
       this.setState(stateTypes.run, {
-        side: 'left',
-        speed: speed
-      })
-    } else if (this.controls.right && !this.controls.left) {
-      this.setState(stateTypes.run, {
-        side: 'right',
+        direction,
         speed: speed
       })
     } else {

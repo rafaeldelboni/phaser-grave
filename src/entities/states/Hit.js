@@ -23,6 +23,7 @@ export default class Hit extends State {
   start ({ striker, attack }) {
     this.attack = attack
     this.striker = striker
+    this.striker.lastTargetHit = this.actor
     this.damage = 1
     this.time = this.hit.duration
 

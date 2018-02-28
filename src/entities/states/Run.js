@@ -1,5 +1,7 @@
 import { State, types } from './'
 
+const pythInverse = 1 / Math.SQRT2
+
 export default class Run extends State {
   constructor (actor, run) {
     super(actor, types.run)
@@ -9,14 +11,17 @@ export default class Run extends State {
 
   start (parameters = {}) {
     this.timeless = true
-    let speedSide = 1
-    if (parameters.side === 'right') {
-      speedSide = this.actor.faceRight()
-    } else {
-      speedSide = this.actor.faceLeft()
-    }
+    this.actor.face(parameters.direction.x)
 
-    this.actor.setVelocity(parameters.speed * speedSide)
+    const targetSpeed =
+      parameters.direction.x !== 0 && parameters.direction.y !== 0
+        ? parameters.speed * pythInverse
+        : parameters.speed
+
+    this.actor.setVelocity(
+      targetSpeed * parameters.direction.x,
+      targetSpeed * parameters.direction.y
+    )
     this.actor.playAnimation(this.run.animation || 'run', this.run.archorX)
   }
 

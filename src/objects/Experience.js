@@ -17,6 +17,7 @@ export default class extends Phaser.Sprite {
       speed: 185
     }
 
+    // TODO: throw experience balls upwards to player can actually see it
     this.body.maxVelocity.set(120)
     this.body.drag.set(100)
   }
