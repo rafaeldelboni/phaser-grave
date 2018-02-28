@@ -35,25 +35,23 @@ export default class Actor {
   }
 
   face (xFactor) {
-    this.sprite.scale.x = xFactor
-    for (const h of this.hitboxes.children) {
-      h.scale.x = xFactor
-    }
     this.direction = {
       name: xFactor === 1 ? 'right' : 'left',
       factor: xFactor
+    }
+    this.sprite.scale.x = xFactor
+    for (const h of this.hitboxes.children) {
+      h.scale.x = xFactor
     }
     return xFactor
   }
 
   faceLeft () {
-    this.direction = { name: 'left', factor: -1 }
-    return this.face(this.direction.factor)
+    return this.face(-1)
   }
 
   faceRight () {
-    this.direction = { name: 'right', factor: 1 }
-    return this.face(this.direction.factor)
+    return this.face(1)
   }
 
   getHitbox (name) {

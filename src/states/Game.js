@@ -171,7 +171,7 @@ export default class extends Phaser.State {
 
   render () {
     this.player.render()
-    this.enemies.forEach(enemie => enemie.render())
+    this.enemies.forEach(enemy => enemy.render())
     this.fences.forEach(fence => fence.render())
     this.experiences.forEach(experience => experience.render())
     if (this.game.config.isDevelopment) {
