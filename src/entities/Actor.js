@@ -19,8 +19,6 @@ export default class Actor {
 
     this.game.physics.arcade.enable(this.sprite)
     this.hitboxes = this.game.add.group()
-    this.hitboxes.enableBody = true
-    this.game.physics.arcade.enable(this.hitboxes)
   }
 
   _calculateStateTimes () {

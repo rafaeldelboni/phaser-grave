@@ -1,5 +1,5 @@
 import Actor from './Actor'
-import Animations from './helpers/Animations'
+import { Animations, Hitboxes } from './helpers'
 
 import { types as stateTypes, Idle, Run, Attack, Hit, Die } from './states'
 import { Dust, Spark } from '../particles'
@@ -41,7 +41,23 @@ const attributes = {
     width: 25,
     height: 2,
     y: 105
-  }
+  },
+  hitboxes: [
+    {
+      width: 35,
+      height: 28,
+      offsetX: 21,
+      offsetY: 8,
+      name: 'attack'
+    },
+    {
+      width: 18,
+      height: 25,
+      offsetX: 15,
+      offsetY: 8,
+      name: 'torso'
+    }
+  ]
 }
 
 export default class Knight extends Actor {
@@ -69,6 +85,7 @@ export default class Knight extends Actor {
       new Die(this, attributes.die)
     ])
 
+    this.healthBar = new HealthBar(this, attributes.healthBar)
     this.playAnimation('idle', attributes.idle.archorX)
     this.faceLeft()
   }
@@ -77,20 +94,8 @@ export default class Knight extends Actor {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
-    const attack = this.hitboxes.create(0, 0, null)
-    attack.anchor.set(0.5)
-    attack.body.setSize(35, 28, 21, 8)
-    attack.name = 'attack'
-
-    const torso = this.hitboxes.create(0, 0, null)
-    torso.anchor.set(0.5)
-    torso.body.setSize(18, 25, 15, 8)
-    torso.name = 'torso'
-
-    this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
+    this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
-
-    this.healthBar = new HealthBar(this, attributes.healthBar)
   }
 
   _setupParticles () {

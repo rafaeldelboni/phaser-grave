@@ -1,6 +1,5 @@
 import Actor from './Actor'
-import Animations from './helpers/Animations'
-import Controls from './helpers/Controls'
+import { Animations, Controls, Hitboxes } from './helpers'
 import {
   types as stateTypes,
   Idle,
@@ -71,7 +70,37 @@ const attributes = {
     height: 6,
     fixedToCamera: true,
     visible: true
-  }
+  },
+  hitboxes: [
+    {
+      width: 30,
+      height: 18,
+      offsetX: 18,
+      offsetY: 15,
+      name: 'attack_one'
+    },
+    {
+      width: 20,
+      height: 28,
+      offsetX: 25,
+      offsetY: 8,
+      name: 'attack_two'
+    },
+    {
+      width: 52,
+      height: 8,
+      offsetX: 7,
+      offsetY: 22,
+      name: 'attack_three'
+    },
+    {
+      width: 17,
+      height: 22,
+      offsetX: 11,
+      offsetY: 10,
+      name: 'torso'
+    }
+  ]
 }
 
 export default class Skeleton extends Actor {
@@ -99,40 +128,17 @@ export default class Skeleton extends Actor {
       new Die(this, attributes.die)
     ])
 
+    this.healthBar = new HealthBar(this, attributes.healthBar)
     this.playAnimation('idle', attributes.idle.archorX)
     this.faceRight()
   }
 
   _setupBody () {
-    // walk body
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
 
-    const attackOne = this.hitboxes.create(0, 0, null)
-    attackOne.anchor.set(0.5)
-    attackOne.body.setSize(30, 18, 18, 15)
-    attackOne.name = 'attack_one'
-
-    const attackTwo = this.hitboxes.create(0, 0, null)
-    attackTwo.anchor.set(0.5)
-    attackTwo.body.setSize(20, 28, 25, 8)
-    attackTwo.name = 'attack_two'
-
-    const attackThree = this.hitboxes.create(0, 0, null)
-    attackThree.anchor.set(0.5)
-    attackThree.body.setSize(52, 8, 7, 22)
-    attackThree.name = 'attack_three'
-
-    const torso = this.hitboxes.create(0, 0, null)
-    torso.anchor.set(0.5)
-    torso.body.setSize(17, 22, 11, 10)
-    torso.name = 'torso'
-
-    this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
-
+    this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
-
-    this.healthBar = new HealthBar(this, attributes.healthBar)
   }
 
   _setupParticles () {

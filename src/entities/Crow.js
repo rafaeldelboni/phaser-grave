@@ -1,5 +1,5 @@
 import Actor from './Actor'
-import Animations from './helpers/Animations'
+import { Animations, Hitboxes } from './helpers'
 
 import { types as stateTypes, Hit, Run, Attack, Die } from './states'
 import { Feathers } from '../particles'
@@ -34,7 +34,23 @@ const attributes = {
   die: { duration: 1, type: { particle: 'feathers' } },
   ai: {
     attackRange: 20
-  }
+  },
+  hitboxes: [
+    {
+      width: 5,
+      height: 25,
+      offsetX: 25,
+      offsetY: 0,
+      name: 'crow'
+    },
+    {
+      width: 30,
+      height: 25,
+      offsetX: 5,
+      offsetY: 0,
+      name: 'torso'
+    }
+  ]
 }
 
 export default class Crow extends Actor {
@@ -70,17 +86,7 @@ export default class Crow extends Actor {
     this.sprite.body.setSize(0)
     this.sprite.body.checkCollision.none = true
 
-    const attack = this.hitboxes.create(0, 0, null)
-    attack.anchor.set(0.5)
-    attack.body.setSize(5, 25, 25, 0)
-    attack.name = 'crow'
-
-    const torso = this.hitboxes.create(0, 0, null)
-    torso.anchor.set(0.5)
-    torso.body.setSize(30, 25, 5, 0)
-    torso.name = 'torso'
-
-    this.hitboxes.children.map(hitbox => hitbox.reset(0, 0))
+    this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
   }
 
