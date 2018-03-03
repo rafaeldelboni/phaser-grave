@@ -1,14 +1,6 @@
 import Actor from './Actor'
-import { Animations, Controls, Hitboxes } from './helpers'
-import {
-  types as stateTypes,
-  Idle,
-  Run,
-  Roll,
-  Attack,
-  Hit,
-  Die
-} from './states'
+import { Animations, Controls, Hitboxes, States } from './helpers'
+import { types as stateTypes } from './states'
 import { Dust, Bones } from '../particles'
 import { HealthBar } from '../ui'
 
@@ -25,44 +17,46 @@ const attributes = {
     { name: 'attack_three', start: 0, stop: 5, speed: 6, loop: false },
     { name: 'hitstun', start: 0, stop: 0, speed: 1, loop: true }
   ],
-  idle: { archorX: 0.5 },
-  run: { speed: 125, archorX: 0.5 },
-  roll: { duration: 36, cooldown: 0, speed: 180, archorX: 0.25 },
-  attacks: [
-    {
-      name: 'attack_one',
-      duration: 35,
-      hitFrame: 15,
-      cooldown: 5,
-      damage: 10,
-      knockback: 1,
-      shake: 1,
-      combo: 15,
-      next: 'attack_two'
-    },
-    {
-      name: 'attack_two',
-      duration: 35,
-      hitFrame: 15,
-      cooldown: 5,
-      damage: 11,
-      knockback: 1,
-      shake: 1,
-      combo: 10,
-      next: 'attack_three'
-    },
-    {
-      name: 'attack_three',
-      duration: 65,
-      hitFrame: 31,
-      cooldown: 10,
-      damage: 6,
-      knockback: 15,
-      shake: 1
-    }
-  ],
-  hit: { duration: 30 },
-  die: { duration: 40, type: { particle: 'bones' } },
+  states: {
+    idle: { archorX: 0.5 },
+    run: { speed: 125, archorX: 0.5 },
+    roll: { duration: 36, cooldown: 0, speed: 180, archorX: 0.25 },
+    attacks: [
+      {
+        name: 'attack_one',
+        duration: 35,
+        hitFrame: 15,
+        cooldown: 5,
+        damage: 10,
+        knockback: 1,
+        shake: 1,
+        combo: 15,
+        next: 'attack_two'
+      },
+      {
+        name: 'attack_two',
+        duration: 35,
+        hitFrame: 15,
+        cooldown: 5,
+        damage: 11,
+        knockback: 1,
+        shake: 1,
+        combo: 10,
+        next: 'attack_three'
+      },
+      {
+        name: 'attack_three',
+        duration: 65,
+        hitFrame: 31,
+        cooldown: 10,
+        damage: 6,
+        knockback: 15,
+        shake: 1
+      }
+    ],
+    hit: { duration: 30 },
+    die: { duration: 40, type: { particle: 'bones' } }
+  },
   healthBar: {
     x: 10,
     y: 10,
@@ -106,6 +100,8 @@ const attributes = {
 export default class Skeleton extends Actor {
   constructor (game, sprite) {
     super(game, sprite)
+    super.initializeStates(States.addMultiple(this, attributes))
+
     this.game = game
     this.name = attributes.name
     this.weight = attributes.weight
@@ -119,17 +115,8 @@ export default class Skeleton extends Actor {
     this._setupParticles()
     this.controls = new Controls(this)
 
-    super.initializeStates([
-      new Idle(this, attributes.idle),
-      new Run(this, attributes.run),
-      new Roll(this, attributes.roll),
-      new Attack(this, attributes.attacks),
-      new Hit(this, attributes.hit),
-      new Die(this, attributes.die)
-    ])
-
     this.healthBar = new HealthBar(this, attributes.healthBar)
-    this.playAnimation('idle', attributes.idle.archorX)
+    this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceRight()
   }
 
@@ -150,12 +137,12 @@ export default class Skeleton extends Actor {
     switch (super.getState().type) {
       default:
       case stateTypes.idle:
-        super.run(attributes.run.speed)
+        super.run(attributes.states.run.speed)
         super.attack()
         super.roll()
         break
       case stateTypes.run:
-        super.run(attributes.run.speed)
+        super.run(attributes.states.run.speed)
         super.attack()
         super.roll()
         break

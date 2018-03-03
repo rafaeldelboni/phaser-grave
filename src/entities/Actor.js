@@ -213,6 +213,7 @@ export default class Actor {
   }
 
   update () {
+    this.controls.update()
     this.healthBar.update()
     this._calculateStateTimes()
   }

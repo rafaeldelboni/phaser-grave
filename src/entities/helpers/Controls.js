@@ -52,4 +52,6 @@ export default class Controls {
   get roll () {
     return this.isDownTimeout(this.keys.roll)
   }
+
+  update () {}
 }
