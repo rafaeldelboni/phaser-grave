@@ -25,7 +25,7 @@ const attributes = {
       name: 'crow',
       duration: 2,
       hitFrame: 1,
-      knockback: 1,
+      knockback: 1.5,
       shake: 1,
       canMove: true
     }
@@ -33,7 +33,7 @@ const attributes = {
   hit: { duration: 1, animation: 'crow' },
   die: { duration: 1, type: { particle: 'feathers' } },
   ai: {
-    attackRange: 10
+    attackRange: 30
   }
 }
 
@@ -72,7 +72,7 @@ export default class Crow extends Actor {
 
     const attack = this.hitboxes.create(0, 0, null)
     attack.anchor.set(0.5)
-    attack.body.setSize(5, 25, 12, 0)
+    attack.body.setSize(5, 25, 22, 0)
     attack.name = 'crow'
 
     const torso = this.hitboxes.create(0, 0, null)
