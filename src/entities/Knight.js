@@ -35,7 +35,7 @@ const attributes = {
   hit: { duration: 34 },
   die: { duration: 80, archorX: 0.25, type: { animation: 'die' } },
   ai: {
-    attackRange: 1600
+    attackRange: 160
   },
   healthBar: {
     width: 25,
@@ -104,12 +104,8 @@ export default class Knight extends Actor {
 
     if (!player.alive) return
 
-    const playerDistance = this.game.math.distanceSq(
-      this.sprite.x,
-      0,
-      player.x,
-      0
-    )
+    const playerDistance =
+      this.game.math.distanceSq(this.sprite.x, 0, player.x, 0) / 10
     const playerDirection = this.sprite.x > player.x ? 'left' : 'right'
     if (playerDistance > attributes.ai.attackRange) {
       this.controls[playerDirection] = true
