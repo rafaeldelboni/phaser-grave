@@ -2,7 +2,6 @@ import Phaser from 'phaser'
 import { Fence, Grave } from '../objects'
 import { Crow, Knight, Skeleton } from '../entities'
 import { TextBox } from '../ui'
-import { Feathers } from '../particles'
 
 export default class extends Phaser.State {
   _createBackgroundLayer (positionY, sizeX, name, file, color, body) {
