@@ -2,7 +2,7 @@ import Actor from './Actor'
 import Animations from './helpers/Animations'
 
 import { types as stateTypes, Hit, Run, Attack, Die } from './states'
-import { Bones } from '../particles'
+import { Feathers } from '../particles'
 
 const attributes = {
   name: 'crow',
@@ -52,7 +52,7 @@ export default class Crow extends Actor {
       attributes.animations
     )
     this._setupBody()
-    this.feathers = new Bones(this, 0, 10)
+    this.feathers = new Feathers(this, 0, -5)
 
     super.initializeStates([
       new Run(this, attributes.run),

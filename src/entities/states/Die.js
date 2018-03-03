@@ -37,7 +37,6 @@ export default class Die extends State {
         this.actor.bones.start()
         break
       case 'feathers':
-        // TODO: death particles feather
         this.actor.feathers.start()
         break
     }
