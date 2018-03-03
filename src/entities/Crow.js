@@ -1,6 +1,6 @@
 import Actor from './Actor'
 import { Ai, Animations, Hitboxes, States } from './helpers'
-import { types as stateTypes, Hit, Run, Attack, Die } from './states'
+import { types as stateTypes } from './states'
 import { Feathers } from '../particles'
 
 const attributes = {
