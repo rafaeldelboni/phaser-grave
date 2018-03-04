@@ -11,23 +11,10 @@ export default class Die extends State {
   }
 
   _animation (name) {
-    this.actor.playAnimation('die', this.die.archorX)
+    this.actor.playAnimation(name, this.die.archorX)
     this.actor.game.add
       .tween(this.actor.sprite)
       .to({ alpha: 0 }, 1250, Phaser.Easing.Quintic.None, true)
-  }
-
-  _spawExperience () {
-    if (this.actor.name !== 'skeleton') {
-      this.stage.experiences.addMultiple(
-        Experience.factory(this.actor, this.striker, this.actor.experience)
-      )
-    }
-  }
-
-  _destroy () {
-    this._spawExperience()
-    this.actor.destroy()
   }
 
   _particle (name) {
@@ -41,6 +28,19 @@ export default class Die extends State {
         break
     }
     this._destroy()
+  }
+
+  _spawExperience () {
+    if (this.actor.name !== 'skeleton') {
+      this.stage.experiences.addMultiple(
+        Experience.factory(this.actor, this.striker, this.actor.experience)
+      )
+    }
+  }
+
+  _destroy () {
+    this._spawExperience()
+    this.actor.destroy()
   }
 
   start (striker) {

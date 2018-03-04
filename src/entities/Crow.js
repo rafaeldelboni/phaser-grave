@@ -1,5 +1,5 @@
 import Actor from './Actor'
-import { Ai, Animations, Hitboxes, States } from './helpers'
+import { Ai, Animations, Hitboxes } from './helpers'
 import { types as stateTypes } from './states'
 import { Feathers } from '../particles'
 
@@ -57,22 +57,17 @@ const attributes = {
 
 export default class Crow extends Actor {
   constructor (game, sprite, player) {
-    super(game, sprite)
-    super.initializeStates(States.addMultiple(this, attributes))
+    super(game, sprite, attributes)
 
     this.player = player
-    this.experience = attributes.experience
 
-    this.game = game
-    this.name = attributes.name
-    this.weight = attributes.weight
-    this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
       this.name,
       this.sprite.animations,
       attributes.animations
     )
     this._setupBody()
+
     this.feathers = new Feathers(this, 0, -5)
     this.controls = new Ai(this, player, attributes)
 
@@ -84,7 +79,6 @@ export default class Crow extends Actor {
   _setupBody () {
     this.sprite.body.setSize(0)
     this.sprite.body.checkCollision.none = true
-
     this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
   }

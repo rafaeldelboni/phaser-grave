@@ -1,24 +1,29 @@
+import { States } from './helpers'
 import { State, types as stateTypes } from './states'
 
 export default class Actor {
-  constructor (game, sprite) {
+  constructor (game, sprite, attributes = {}) {
     this.game = game
     this.sprite = sprite
-    this.states = []
-    this.weight = 1
+    this.name = attributes.name || ''
+    this.weight = attributes.weight || 1
+    this.experience = attributes.experience || 0
+
     this.direction = {}
     this.targets = []
     this.controls = {}
+    this.states = []
     this.killCount = 0
     this.experiencePoints = 0
+    this.lastTargetHit = null
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
-    this.lastTargetHit = null
-
     this.healthBar = { change: () => {}, update: () => {} }
 
     this.game.physics.arcade.enable(this.sprite)
     this.hitboxes = this.game.add.group()
+
+    this.initializeStates(States.addMultiple(this, attributes))
   }
 
   _calculateStateTimes () {

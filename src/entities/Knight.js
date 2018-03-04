@@ -1,5 +1,5 @@
 import Actor from './Actor'
-import { Ai, Animations, Hitboxes, States } from './helpers'
+import { Ai, Animations, Hitboxes } from './helpers'
 import { types as stateTypes } from './states'
 import { Dust, Spark } from '../particles'
 import { HealthBar } from '../ui'
@@ -64,27 +64,25 @@ const attributes = {
 
 export default class Knight extends Actor {
   constructor (game, sprite, player) {
-    super(game, sprite)
-    super.initializeStates(States.addMultiple(this, attributes))
+    super(game, sprite, attributes)
 
     this.player = player
-    this.experience = attributes.experience
 
-    this.game = game
-    this.name = attributes.name
-    this.weight = attributes.weight
-    this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
       this.name,
       this.sprite.animations,
       attributes.animations
     )
+
     this._setupBody()
+
     this.dust = new Dust(this, 0, 24, 10)
     this.spark = new Spark(this, 0, 0, 15)
     this.controls = new Ai(this, player, attributes)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
+    this.setHealth(attributes.health)
+
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceLeft()
   }
@@ -92,7 +90,6 @@ export default class Knight extends Actor {
   _setupBody () {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
-
     this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
   }

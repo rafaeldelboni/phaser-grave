@@ -1,5 +1,5 @@
 import Actor from './Actor'
-import { Animations, Controls, Hitboxes, States } from './helpers'
+import { Animations, Controls, Hitboxes } from './helpers'
 import { types as stateTypes } from './states'
 import { Dust, Bones } from '../particles'
 import { HealthBar } from '../ui'
@@ -99,23 +99,23 @@ const attributes = {
 
 export default class Skeleton extends Actor {
   constructor (game, sprite) {
-    super(game, sprite)
-    super.initializeStates(States.addMultiple(this, attributes))
+    super(game, sprite, attributes)
 
-    this.game = game
-    this.name = attributes.name
-    this.weight = attributes.weight
-    this.setHealth(attributes.health)
     this.anims = Animations.addMultiple(
       this.name,
       this.sprite.animations,
       attributes.animations
     )
+
     this._setupBody()
-    this._setupParticles()
+
+    this.dust = new Dust(this, 0, 24, 10)
+    this.bones = new Bones(this, 0, 10)
     this.controls = new Controls(this)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
+    this.setHealth(attributes.health)
+
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceRight()
   }
@@ -123,14 +123,8 @@ export default class Skeleton extends Actor {
   _setupBody () {
     this.sprite.body.setSize(20, 8, 13, 40)
     this.sprite.body.collideWorldBounds = true
-
     this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
-  }
-
-  _setupParticles () {
-    this.dust = new Dust(this, 0, 24, 10)
-    this.bones = new Bones(this, 0, 10)
   }
 
   _handleStates () {
