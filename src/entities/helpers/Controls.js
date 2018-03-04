@@ -4,6 +4,7 @@ export default class Controls {
   constructor (actor) {
     this.game = actor.game
     this.keys = {
+      reset: [this.game.input.keyboard.addKey(Phaser.Keyboard.R)],
       left: [
         this.game.input.keyboard.addKey(Phaser.Keyboard.A),
         this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
@@ -53,5 +54,10 @@ export default class Controls {
     return this.isDownTimeout(this.keys.roll)
   }
 
-  update () {}
+  update () {
+    console.log('assa')
+    if (this.isDown(this.keys.reset)) {
+      this.game.state.start('Game', true, false)
+    }
+  }
 }
