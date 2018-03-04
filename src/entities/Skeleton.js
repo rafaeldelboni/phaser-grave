@@ -24,10 +24,10 @@ const attributes = {
     attacks: [
       {
         name: 'attack_one',
+        damage: 1,
         duration: 35,
         hitFrame: 15,
         cooldown: 5,
-        damage: 10,
         knockback: 1,
         shake: 1,
         combo: 15,
@@ -35,10 +35,10 @@ const attributes = {
       },
       {
         name: 'attack_two',
+        damage: 1,
         duration: 35,
         hitFrame: 15,
         cooldown: 5,
-        damage: 11,
         knockback: 1,
         shake: 1,
         combo: 10,
@@ -46,10 +46,10 @@ const attributes = {
       },
       {
         name: 'attack_three',
+        damage: 1,
         duration: 65,
         hitFrame: 31,
         cooldown: 10,
-        damage: 6,
         knockback: 15,
         shake: 1
       }

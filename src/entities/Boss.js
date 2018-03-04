@@ -5,40 +5,38 @@ import { Dust, Spark } from '../particles'
 import { HealthBar } from '../ui'
 
 const attributes = {
-  name: 'knight',
+  name: 'boss',
   type: 'humanoid',
   experience: 4,
-  health: 4,
+  health: 10,
   weight: 1,
+  unstoppable: true,
   animations: [
-    { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
-    { name: 'run', start: 0, stop: 5, speed: 9, loop: true },
-    { name: 'walk', start: 0, stop: 3, speed: 9, loop: true },
-    { name: 'attack', start: 0, stop: 11, speed: 9, loop: false },
-    { name: 'die', start: 0, stop: 5, speed: 7, loop: false },
-    { name: 'block', start: 0, stop: 0, speed: 1, loop: true },
-    { name: 'hitstun', start: 0, stop: 0, speed: 1, loop: true }
+    { name: 'idle', start: 0, stop: 0, speed: 1, loop: true },
+    { name: 'walk', start: 0, stop: 5, speed: 5, loop: true },
+    { name: 'attack', start: 0, stop: 14, speed: 5, loop: false }
   ],
   states: {
     idle: { archorX: 0.5 },
-    run: { speed: 50, archorX: 0.45 },
+    run: { speed: 35, archorX: 0.5, animation: 'walk' },
     attacks: [
       {
         name: 'attack',
-        damage: 1,
-        duration: 75,
-        hitFrame: 35,
-        cooldown: 10,
-        knockback: 1,
-        shake: 3,
-        archorX: 0.25
+        damage: 2,
+        duration: 150,
+        hitFrame: 75,
+        cooldown: 15,
+        knockback: 10,
+        shake: 10,
+        archorX: 0.355,
+        archorY: 0.737
       }
     ],
-    hit: { duration: 34 },
-    die: { duration: 80, archorX: 0.25, type: { animation: 'die' } }
+    die: { duration: 40, archorX: 0.5, type: { animation: 'idle' } }
   },
   ai: {
-    attackRange: 160
+    attackRange: 1350,
+    attackMinimumDistance: 500
   },
   healthBar: {
     width: 25,
@@ -47,23 +45,23 @@ const attributes = {
   },
   hitboxes: [
     {
-      width: 35,
-      height: 28,
-      offsetX: 21,
-      offsetY: 8,
+      width: 90,
+      height: 20,
+      offsetX: 80,
+      offsetY: 40,
       name: 'attack'
     },
     {
-      width: 18,
-      height: 25,
-      offsetX: 15,
-      offsetY: 8,
+      width: 42,
+      height: 84,
+      offsetX: 0,
+      offsetY: -25,
       name: 'torso'
     }
   ]
 }
 
-export default class Knight extends Actor {
+export default class Boss extends Actor {
   constructor (game, sprite, player) {
     super(game, sprite, attributes)
 
@@ -89,7 +87,7 @@ export default class Knight extends Actor {
   }
 
   _setupBody () {
-    this.sprite.body.setSize(20, 8, 13, 40)
+    this.sprite.body.setSize(80, 8, 13, 82)
     this.sprite.body.collideWorldBounds = true
     this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)
@@ -110,6 +108,8 @@ export default class Knight extends Actor {
         super.attack()
         break
       case stateTypes.hit:
+        super.attack()
+        break
       case stateTypes.die:
         break
     }

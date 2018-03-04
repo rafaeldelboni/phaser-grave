@@ -102,7 +102,7 @@ export default class HealthBar {
         this.actorSprite.alive = false
         const tween = this.game.add
           .tween(this.borderSprite)
-          .to({ alpha: 0 }, 80, Phaser.Easing.Linear.None, true, 0, 7, true)
+          .to({ alpha: 0 }, 80, Phaser.Easing.Linear.None, true)
         tween.onComplete.add(() => {
           this.borderSprite.kill()
           this.barSprite.kill()

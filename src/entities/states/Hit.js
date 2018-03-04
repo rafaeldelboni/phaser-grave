@@ -24,7 +24,7 @@ export default class Hit extends State {
     this.attack = attack
     this.striker = striker
     this.striker.lastTargetHit = this.actor
-    this.damage = 1
+    this.damage = attack.damage
     this.time = this.hit.duration
 
     this.actor.setVelocity(0)
@@ -47,5 +47,11 @@ export default class Hit extends State {
       this.actor.damage(this.damage, this.striker)
       this.damage = 0
     }
+  }
+
+  static unstoppableDamage (actor, attack, striker) {
+    actor.game.camera.flash(0xffffff, 75)
+    actor.game.camera.shake(0.01 * attack.shake, 100 * attack.shake)
+    actor.damage(attack.damage, striker)
   }
 }

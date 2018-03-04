@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { Fence, Grave } from '../objects'
-import { Crow, Knight, Skeleton } from '../entities'
+import { Boss, Crow, Knight, Skeleton } from '../entities'
 import { TextBox } from '../ui'
 
 export default class extends Phaser.State {
@@ -113,7 +113,7 @@ export default class extends Phaser.State {
 
     this.knight = new Knight(
       this.game,
-      this.game.add.sprite(750, 123, 'atlas', ''),
+      this.game.add.sprite(550, 123, 'atlas', ''),
       this.player
     )
     this.enemies.push(this.knight)
@@ -124,6 +124,13 @@ export default class extends Phaser.State {
       this.player
     )
     this.enemies.push(this.crow)
+
+    this.boss = new Boss(
+      this.game,
+      this.game.add.sprite(750, 105, 'atlas', ''),
+      this.player
+    )
+    this.enemies.push(this.boss)
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(

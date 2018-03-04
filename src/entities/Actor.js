@@ -1,13 +1,10 @@
 import { States } from './helpers'
-import { State, types as stateTypes } from './states'
+import { State, Hit, types as stateTypes } from './states'
 
 export default class Actor {
   constructor (game, sprite, attributes = {}) {
     this.game = game
     this.sprite = sprite
-    this.name = attributes.name || ''
-    this.weight = attributes.weight || 1
-    this.experience = attributes.experience || 0
 
     this.direction = {}
     this.targets = []
@@ -22,6 +19,11 @@ export default class Actor {
 
     this.game.physics.arcade.enable(this.sprite)
     this.hitboxes = this.game.add.group()
+
+    this.name = attributes.name || ''
+    this.weight = attributes.weight || 1
+    this.experience = attributes.experience || 0
+    this.unstoppable = attributes.unstoppable || false
 
     this.initializeStates(States.addMultiple(this, attributes))
   }
@@ -164,13 +166,17 @@ export default class Actor {
     return this.sprite.destroy()
   }
 
-  hit (damage) {
+  hit (hit) {
     if (
-      this !== damage.striker &&
+      this !== hit.striker &&
       this.getState().type !== stateTypes.roll &&
       this.health > 0
     ) {
-      this.setState(stateTypes.hit, damage)
+      if (!this.unstoppable) {
+        this.setState(stateTypes.hit, hit)
+      } else {
+        Hit.unstoppableDamage(this, hit.attack, hit.striker)
+      }
     }
   }
 

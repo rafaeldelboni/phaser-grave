@@ -32,10 +32,20 @@ export default class Ai {
     const playerDistance =
       this.game.math.distanceSq(actorSprite.x, 0, playerSprite.x, 0) / 10
 
-    const playerDirection = actorSprite.x > playerSprite.x ? 'left' : 'right'
+    let playerDirection = ''
+    let playerCounterDirection = ''
+    if (actorSprite.x > playerSprite.x) {
+      playerDirection = 'left'
+      playerCounterDirection = 'right'
+    } else {
+      playerDirection = 'right'
+      playerCounterDirection = 'left'
+    }
 
     if (playerDistance > this.attributes.ai.attackRange) {
       controls[playerDirection] = true
+    } else if (playerDistance < this.attributes.ai.attackMinimumDistance) {
+      controls[playerCounterDirection] = true
     } else {
       if (this.actor.direction.name !== playerDirection) {
         controls[playerDirection] = true

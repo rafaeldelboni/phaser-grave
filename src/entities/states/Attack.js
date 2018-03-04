@@ -45,7 +45,7 @@ export default class Attack extends State {
       if (!attack.canMove) {
         this.actor.setVelocity(0)
       }
-      this.actor.playAnimation(attack.name, attack.archorX)
+      this.actor.playAnimation(attack.name, attack.archorX, attack.archorY)
     }
   }
 
