@@ -145,11 +145,13 @@ export default class extends Phaser.State {
 
     this.experiences = this.game.add.group(this.world, 'experience')
 
-    this.fps = new TextBox(this.game, this.game.time.fps, {
-      size: 5,
-      x: 305,
-      y: 170
-    })
+    if (this.game.config.isDevelopment) {
+      this.fps = new TextBox(this.game, this.game.time.fps, {
+        size: 5,
+        x: 305,
+        y: 170
+      })
+    }
   }
 
   update () {
