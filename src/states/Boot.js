@@ -16,6 +16,7 @@ export default class extends Phaser.State {
   }
 
   create () {
+    this.time.advancedTiming = true
     this.game.physics.startSystem(Phaser.Physics.ARCADE)
   }
 

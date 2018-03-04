@@ -10,13 +10,16 @@ export default class TextBox {
         y: 18,
         size: 5,
         bgColor: '#222222',
+        fontColor: '#FFFFFF',
         anchorX: 1,
         anchorY: 1,
         fixedToCamera: true
       },
       options
     )
-    this.background = this._createBackground()
+    if (this.options.bgColor) {
+      this.background = this._createBackground()
+    }
     this.text = this._createText(input)
   }
 
@@ -29,6 +32,7 @@ export default class TextBox {
       this.options.size
     )
     text.fixedToCamera = this.options.fixedToCamera
+    text.tint = Phaser.Color.hexToRGB(this.options.fontColor)
     return text
   }
 

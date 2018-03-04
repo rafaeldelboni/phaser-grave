@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 export default class Controls {
-  constructor (actor) {
-    this.game = actor.game
+  constructor (game) {
+    this.game = game
     this.keys = {
       reset: [this.game.input.keyboard.addKey(Phaser.Keyboard.R)],
       left: [
@@ -55,7 +55,6 @@ export default class Controls {
   }
 
   update () {
-    console.log('assa')
     if (this.isDown(this.keys.reset)) {
       this.game.state.start('Game', true, false)
     }

@@ -144,6 +144,12 @@ export default class extends Phaser.State {
     )
 
     this.experiences = this.game.add.group(this.world, 'experience')
+
+    this.fps = new TextBox(this.game, this.game.time.fps, {
+      size: 5,
+      x: 305,
+      y: 170
+    })
   }
 
   update () {
@@ -185,6 +191,7 @@ export default class extends Phaser.State {
       this.underFloorwallBg.forEach(wall => this.game.debug.body(wall))
       this.player.sprite.alive &&
         this.game.debug.spriteInfo(this.player.sprite, 32, 32)
+      this.fps.update(this.game.time.fps)
     }
   }
 }

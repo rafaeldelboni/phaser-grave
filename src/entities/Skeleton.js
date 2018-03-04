@@ -117,7 +117,7 @@ export default class Skeleton extends Actor {
 
     this.dust = new Dust(this, 0, 24, 10)
     this.bones = new Bones(this, 0, 10)
-    this.controls = new Controls(this)
+    this.controls = new Controls(game)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
 
@@ -160,6 +160,13 @@ export default class Skeleton extends Actor {
     this.game.physics.arcade.collide(this.bones)
     this.targets = targets
     this._handleStates()
+  }
+
+  destroy () {
+    this.game.time.events.add(1500, () =>
+      this.game.state.start('End', true, false, this.killCount)
+    )
+    super.destroy()
   }
 
   render () {
