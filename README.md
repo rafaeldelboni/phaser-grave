@@ -48,10 +48,12 @@ This will optimize and minimize the compiled bundle.
 
 ## Credits
 
-https://uheartbeast.itch.io/grave
+Assets & Game Design: https://uheartbeast.itch.io/grave
 
-https://github.com/photonstorm/phaser-ce
+Engine: https://github.com/photonstorm/phaser-ce
 
-https://github.com/lean/phaser-es6-webpack
+Boostrap: https://github.com/lean/phaser-es6-webpack
+
+Inspiration: https://github.com/petarov/game-off-2017
 
 [badge-status]: https://img.shields.io/badge/status-work%20in%20progress-lightgrey.svg
