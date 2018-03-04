@@ -31,6 +31,8 @@ const attributes = {
         cooldown: 10,
         knockback: 1,
         shake: 3,
+        audioHit: 'hitTwo',
+        audioMiss: 'miss',
         archorX: 0.25
       }
     ],
@@ -82,7 +84,6 @@ export default class Knight extends Actor {
     this.controls = new Ai(this, player, attributes)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
-    this.setHealth(attributes.health)
 
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceLeft()

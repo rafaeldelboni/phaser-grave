@@ -24,10 +24,12 @@ const attributes = {
         name: 'attack',
         damage: 2,
         duration: 150,
-        hitFrame: 75,
+        hitFrame: 60,
         cooldown: 15,
         knockback: 10,
         shake: 10,
+        audioHit: 'bigHit',
+        audioMiss: 'bigHit',
         archorX: 0.355,
         archorY: 0.737
       }
@@ -80,7 +82,6 @@ export default class Boss extends Actor {
     this.controls = new Ai(this, player, attributes)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
-    this.setHealth(attributes.health)
 
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceLeft()

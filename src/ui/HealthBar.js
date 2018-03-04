@@ -15,7 +15,8 @@ export default class HealthBar {
           color: '#ffffff',
           background: '#000000'
         },
-        fixedToCamera: false
+        fixedToCamera: false,
+        visible: false
       },
       options
     )
@@ -24,7 +25,7 @@ export default class HealthBar {
     this.borderSprite = null
     this._createHealthBar()
 
-    this.visible = options.visible || false
+    this.visible = options.visible
     this.setInvisible = actor.game.time.create(false)
   }
 

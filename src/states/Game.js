@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
-import { Fence, Grave } from '../objects'
+import { Experience, Fence, Grave } from '../objects'
 import { Boss, Crow, Knight, Skeleton } from '../entities'
 import { TextBox } from '../ui'
+import Audio from '../Audio'
 
 export default class extends Phaser.State {
   _createBackgroundLayer (positionY, sizeX, name, file, color, body) {
@@ -97,6 +98,8 @@ export default class extends Phaser.State {
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
     this.enemies = []
+    this.game.audio = new Audio(this.game)
+    this.game.audio.music.play()
   }
 
   preload () {
@@ -153,11 +156,8 @@ export default class extends Phaser.State {
       this.player.getHitbox('torso'),
       this.experiences,
       null,
-      (playerTorso, experience) => {
-        playerTorso.actor.experiencePoints++
-        experience.destroy()
-        return false
-      }
+      Experience.collide,
+      this
     )
 
     this.game.physics.arcade.collide(this.player.sprite, this.fences)

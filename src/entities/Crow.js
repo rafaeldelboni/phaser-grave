@@ -29,6 +29,7 @@ const attributes = {
         hitFrame: 1,
         knockback: 1.5,
         shake: 1,
+        audioHit: 'hitTwo',
         canMove: true
       }
     ],

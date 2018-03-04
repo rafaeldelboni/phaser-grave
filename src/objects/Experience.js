@@ -50,4 +50,11 @@ export default class extends Phaser.Sprite {
     }
     return experiences
   }
+
+  static collide (playerTorso, experience) {
+    playerTorso.actor.experiencePoints++
+    experience.destroy()
+    this.game.audio.sfx.expr.play()
+    return false
+  }
 }

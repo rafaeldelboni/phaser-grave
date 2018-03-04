@@ -7,6 +7,7 @@ export default class Run extends State {
     super(actor, types.run)
     this.run = run
     this.restartable = true
+    this.step = run.stepTime || 10
   }
 
   start (parameters = {}) {
@@ -27,5 +28,16 @@ export default class Run extends State {
 
   stop () {
     this.timeless = false
+  }
+
+  update () {
+    if (this.run.audio && this.timeless) {
+      if (this.step === 0) {
+        this.actor.game.audio.sfx[this.run.audio].play()
+        this.step = 18
+      } else {
+        this.step--
+      }
+    }
   }
 }

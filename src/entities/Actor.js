@@ -24,6 +24,8 @@ export default class Actor {
     this.weight = attributes.weight || 1
     this.experience = attributes.experience || 0
     this.unstoppable = attributes.unstoppable || false
+    this.sprite.maxHealth = attributes.health
+    this.sprite.setHealth(attributes.health)
 
     this.initializeStates(States.addMultiple(this, attributes))
   }

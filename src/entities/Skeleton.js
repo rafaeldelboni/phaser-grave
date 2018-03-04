@@ -19,7 +19,7 @@ const attributes = {
   ],
   states: {
     idle: { archorX: 0.5 },
-    run: { speed: 125, archorX: 0.5 },
+    run: { speed: 125, archorX: 0.5, audio: 'step', stepTime: 17 },
     roll: { duration: 36, cooldown: 0, speed: 180, archorX: 0.25 },
     attacks: [
       {
@@ -31,6 +31,8 @@ const attributes = {
         knockback: 1,
         shake: 1,
         combo: 15,
+        audioHit: 'hit',
+        audioMiss: 'miss',
         next: 'attack_two'
       },
       {
@@ -42,6 +44,8 @@ const attributes = {
         knockback: 1,
         shake: 1,
         combo: 10,
+        audioHit: 'hit',
+        audioMiss: 'miss',
         next: 'attack_three'
       },
       {
@@ -51,7 +55,9 @@ const attributes = {
         hitFrame: 31,
         cooldown: 10,
         knockback: 15,
-        shake: 1
+        shake: 1,
+        audioHit: 'hit',
+        audioMiss: 'miss'
       }
     ],
     hit: { duration: 30 },
@@ -114,7 +120,6 @@ export default class Skeleton extends Actor {
     this.controls = new Controls(this)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
-    this.setHealth(attributes.health)
 
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceRight()

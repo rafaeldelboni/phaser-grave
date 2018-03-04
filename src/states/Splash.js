@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import { centerGameObjects } from '../utils'
 import atlasPng from 'assets/atlas.png'
 import atlasJson from 'assets/atlas.json'
+import Audio from '../Audio'
 
 export default class extends Phaser.State {
   init () {}
@@ -28,6 +29,7 @@ export default class extends Phaser.State {
       './assets/fonts/carrier_command.xml'
     )
     this.load.atlas('atlas', atlasPng, atlasJson)
+    Audio.load(this.game)
   }
 
   create () {
