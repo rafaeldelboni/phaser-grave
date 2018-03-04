@@ -3,9 +3,23 @@ import { Controls } from '../entities/helpers'
 import { TextBox } from '../ui'
 
 export default class extends Phaser.State {
+  _setHighscore (highscore) {
+    if (typeof localStorage === 'object') {
+      const currentScore = localStorage.getItem('phaserGraveHighscore')
+      if (currentScore < highscore) {
+        localStorage.setItem('phaserGraveHighscore', highscore)
+        return highscore
+      } else {
+        return currentScore
+      }
+    }
+    return 0
+  }
+
   init (killCounter) {
+    this.game.audio.music.stop()
     this.killCounter = killCounter
-    this.highscore = killCounter
+    this.highscore = this._setHighscore(killCounter)
 
     this.game.world.setBounds(0, -360, 1280, 540)
     this.game.stage.smoothing = false
