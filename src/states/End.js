@@ -10,7 +10,7 @@ export default class extends Phaser.State {
         localStorage.setItem('phaserGraveHighscore', highscore)
         return highscore
       } else {
-        return currentScore
+        return currentScore || 0
       }
     }
     return 0
