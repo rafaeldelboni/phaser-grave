@@ -52,7 +52,7 @@ export default class extends Phaser.Sprite {
   }
 
   static collide (playerTorso, experience) {
-    playerTorso.actor.experiencePoints++
+    playerTorso.actor.experienceUp()
     experience.destroy()
     this.game.audio.sfx.expr.play()
     return false

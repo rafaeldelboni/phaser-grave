@@ -105,7 +105,7 @@ export default class extends Phaser.State {
   preload () {
     this._setBackground()
     this._setFloor()
-    this.killCounter = new TextBox(this.game, 'Kills: 0')
+    this.hudCounter = new TextBox(this.game, 'Kills: 0 | Level: 1')
   }
 
   create () {
@@ -181,7 +181,9 @@ export default class extends Phaser.State {
     this.thirdLayerBg.x = this.game.camera.x * 0.45
 
     this._cleanKilledEnemies()
-    this.killCounter.update(`Kills: ${this.player.killCount}`)
+    this.hudCounter.update(
+      `Kills: ${this.player.killCount}  Level: ${this.player.level.get()}`
+    )
   }
 
   render () {

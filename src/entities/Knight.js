@@ -24,7 +24,7 @@ const attributes = {
     attacks: [
       {
         name: 'attack',
-        damage: 5,
+        damage: 10,
         duration: 75,
         hitFrame: 35,
         cooldown: 10,

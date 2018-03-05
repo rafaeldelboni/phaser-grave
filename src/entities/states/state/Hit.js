@@ -24,7 +24,7 @@ export default class Hit extends State {
     this.attack = attack
     this.striker = striker
     this.striker.lastTargetHit = this.actor
-    this.damage = attack.damage
+    this.damage = attack.damage * striker.level.factor
     this.time = this.hit.duration
 
     this.actor.setVelocity(0)

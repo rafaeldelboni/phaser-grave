@@ -1,6 +1,6 @@
 import Actor from './Actor'
 import Controls from '../Controls'
-import { Animations, Hitboxes } from './helpers'
+import { Animations, Hitboxes, Level } from './helpers'
 import { Dust, Bones } from '../particles'
 import { HealthBar } from '../ui'
 
@@ -8,6 +8,7 @@ const attributes = {
   name: 'skeleton',
   health: 25,
   weight: 1,
+  experiencePoints: 0,
   experienceToNextLevel: 10,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -51,7 +52,7 @@ const attributes = {
       },
       {
         name: 'attack_three',
-        damage: 8.5,
+        damage: 8,
         duration: 65,
         hitFrame: 31,
         cooldown: 10,
@@ -121,6 +122,7 @@ export default class Skeleton extends Actor {
     this.controls = new Controls(game)
 
     this.healthBar = new HealthBar(this, attributes.healthBar)
+    this.level = new Level(this)
 
     this.playAnimation('idle', attributes.states.idle.archorX)
     this.faceRight()
@@ -133,17 +135,22 @@ export default class Skeleton extends Actor {
     this.sprite.addChild(this.hitboxes)
   }
 
-  update (targets) {
-    super.update()
-    this.game.physics.arcade.collide(this.bones)
-    this.targets = targets
-  }
-
   destroy () {
     this.game.time.events.add(1500, () =>
       this.game.state.start('End', true, false, this.killCount)
     )
     super.destroy()
+  }
+
+  experienceUp () {
+    super.experienceUp()
+    this.level.change()
+  }
+
+  update (targets) {
+    super.update()
+    this.game.physics.arcade.collide(this.bones)
+    this.targets = targets
   }
 
   render () {
