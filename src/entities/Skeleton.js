@@ -1,7 +1,6 @@
 import Actor from './Actor'
 import Controls from '../Controls'
 import { Animations, Hitboxes } from './helpers'
-import { types as stateTypes } from './states'
 import { Dust, Bones } from '../particles'
 import { HealthBar } from '../ui'
 
@@ -133,34 +132,10 @@ export default class Skeleton extends Actor {
     this.sprite.addChild(this.hitboxes)
   }
 
-  _handleStates () {
-    switch (super.getState().type) {
-      default:
-      case stateTypes.idle:
-        super.run(attributes.states.run.speed)
-        super.attack()
-        super.roll()
-        break
-      case stateTypes.run:
-        super.run(attributes.states.run.speed)
-        super.attack()
-        super.roll()
-        break
-      case stateTypes.attack:
-        super.attack()
-        break
-      case stateTypes.roll:
-      case stateTypes.hit:
-      case stateTypes.die:
-        break
-    }
-  }
-
   update (targets) {
     super.update()
     this.game.physics.arcade.collide(this.bones)
     this.targets = targets
-    this._handleStates()
   }
 
   destroy () {

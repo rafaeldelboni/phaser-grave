@@ -1,5 +1,5 @@
 import { States } from './helpers'
-import { State, Hit, types as stateTypes } from './states'
+import { Hit, types as stateTypes } from './states'
 
 export default class Actor {
   constructor (game, sprite, attributes = {}) {
@@ -27,18 +27,7 @@ export default class Actor {
     this.sprite.maxHealth = attributes.health
     this.sprite.setHealth(attributes.health)
 
-    this.states = States.addMultiple(this, attributes)
-  }
-
-  _calculateStateTimes () {
-    this.states.map(state => {
-      if (state.time) {
-        state.time--
-      } else if (state.cooldown) {
-        state.cooldown--
-      }
-      state.update()
-    })
+    this.states = new States(this, attributes)
   }
 
   face (xFactor) {
@@ -66,37 +55,6 @@ export default class Actor {
       this.hitboxes.children.find(hitbox => hitbox.name === name) || {}
     hitbox.actor = this
     return hitbox
-  }
-
-  getState () {
-    return (
-      this.states.find(state => state.time || state.timeless) || new State()
-    )
-  }
-
-  setState (newStateType, parameters) {
-    const current = this.getState()
-
-    if (!this.alive && newStateType !== stateTypes.die) {
-      return
-    }
-
-    if (newStateType.mandatory) {
-      this.states.map(state => state.stop())
-    }
-
-    if (
-      !current.time ||
-      (current.restartable && current.type === newStateType) ||
-      (current.timeless && current.type !== newStateType)
-    ) {
-      if (current.timeless) {
-        this.states.filter(state => state.timeless).map(state => state.stop())
-      }
-      this.states
-        .filter(state => state.type === newStateType)
-        .map(state => state.start(parameters))
-    }
   }
 
   playAnimation (animationName, archorX = 0.5, archorY = 0.5) {
@@ -167,11 +125,11 @@ export default class Actor {
   hit (hit) {
     if (
       this !== hit.striker &&
-      this.getState().type !== stateTypes.roll &&
+      this.states.get().type !== stateTypes.roll &&
       this.health > 0
     ) {
       if (!this.unstoppable) {
-        this.setState(stateTypes.hit, hit)
+        this.states.set(stateTypes.hit, hit)
       } else {
         Hit.unstoppableDamage(this, hit.attack, hit.striker)
       }
@@ -179,10 +137,10 @@ export default class Actor {
   }
 
   die (striker) {
-    this.setState(stateTypes.die, striker)
+    this.states.set(stateTypes.die, striker)
   }
 
-  run (speed) {
+  run () {
     let direction = { x: 0, y: 0 }
 
     if (this.controls.left) {
@@ -198,33 +156,32 @@ export default class Actor {
     }
 
     if (direction.x !== 0 || direction.y !== 0) {
-      this.setState(stateTypes.run, {
-        direction,
-        speed: speed
+      this.states.set(stateTypes.run, {
+        direction
       })
     } else {
-      if (this.states.find(state => state.type === stateTypes.idle)) {
-        this.setState(stateTypes.idle)
+      if (this.states.find(stateTypes.idle)) {
+        this.states.set(stateTypes.idle)
       }
     }
   }
 
   attack () {
     if (this.controls.attack) {
-      this.setState(stateTypes.attack)
+      this.states.set(stateTypes.attack)
     }
   }
 
   roll () {
     if (this.controls.roll) {
-      this.setState(stateTypes.roll)
+      this.states.set(stateTypes.roll)
     }
   }
 
   update () {
     this.controls.update()
     this.healthBar.update()
-    this._calculateStateTimes()
+    this.states.update()
   }
 
   render () {

@@ -16,8 +16,8 @@ export default class Run extends State {
 
     const targetSpeed =
       parameters.direction.x !== 0 && parameters.direction.y !== 0
-        ? parameters.speed * pythInverse
-        : parameters.speed
+        ? this.run.speed * pythInverse
+        : this.run.speed
 
     this.actor.setVelocity(
       targetSpeed * parameters.direction.x,

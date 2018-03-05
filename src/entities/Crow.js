@@ -1,6 +1,5 @@
 import Actor from './Actor'
 import { Ai, Animations, Hitboxes } from './helpers'
-import { types as stateTypes } from './states'
 import { Feathers } from '../particles'
 
 const attributes = {
@@ -85,26 +84,9 @@ export default class Crow extends Actor {
     this.sprite.addChild(this.hitboxes)
   }
 
-  _handleStates () {
-    switch (super.getState().type) {
-      default:
-      case stateTypes.run:
-        super.run(attributes.states.run.speed)
-        super.attack()
-        break
-      case stateTypes.attack:
-        super.attack()
-        break
-      case stateTypes.hit:
-      case stateTypes.die:
-        break
-    }
-  }
-
   update (targets) {
     super.update()
     this.targets = targets
-    this._handleStates()
   }
 
   render () {
