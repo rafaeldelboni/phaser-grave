@@ -1,5 +1,4 @@
-import { States } from './helpers'
-import { Hit, types as stateTypes } from './states'
+import { Hit, types as stateTypes, States } from './states'
 
 export default class Actor {
   constructor (game, sprite, attributes = {}) {

@@ -7,7 +7,7 @@ import {
   Die,
   State,
   types as stateTypes
-} from '../states'
+} from './state'
 
 export default class States {
   constructor (actor, attributes) {

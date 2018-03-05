@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { State, types } from './'
-import { Experience } from '../../objects'
+import { Experience } from '../../../objects'
 
 export default class Die extends State {
   constructor (actor, die) {
