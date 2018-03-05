@@ -23,7 +23,7 @@ const attributes = {
     attacks: [
       {
         name: 'crow',
-        damage: 1,
+        damage: 5,
         duration: 2,
         hitFrame: 1,
         knockback: 1.5,

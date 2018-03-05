@@ -6,8 +6,9 @@ import { HealthBar } from '../ui'
 
 const attributes = {
   name: 'skeleton',
-  health: 2,
+  health: 25,
   weight: 1,
+  experienceToNextLevel: 10,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
     { name: 'run', start: 0, stop: 5, speed: 9, loop: true },
@@ -24,7 +25,7 @@ const attributes = {
     attacks: [
       {
         name: 'attack_one',
-        damage: 1,
+        damage: 5,
         duration: 35,
         hitFrame: 15,
         cooldown: 5,
@@ -37,7 +38,7 @@ const attributes = {
       },
       {
         name: 'attack_two',
-        damage: 1,
+        damage: 5,
         duration: 35,
         hitFrame: 15,
         cooldown: 5,
@@ -50,7 +51,7 @@ const attributes = {
       },
       {
         name: 'attack_three',
-        damage: 1,
+        damage: 8.5,
         duration: 65,
         hitFrame: 31,
         cooldown: 10,

@@ -6,8 +6,8 @@ import { HealthBar } from '../ui'
 const attributes = {
   name: 'knight',
   type: 'humanoid',
-  experience: 4,
-  health: 4,
+  experience: 5,
+  health: 25,
   weight: 1,
   animations: [
     { name: 'idle', start: 0, stop: 2, speed: 5, loop: true },
@@ -24,7 +24,7 @@ const attributes = {
     attacks: [
       {
         name: 'attack',
-        damage: 1,
+        damage: 5,
         duration: 75,
         hitFrame: 35,
         cooldown: 10,

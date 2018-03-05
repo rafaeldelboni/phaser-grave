@@ -6,8 +6,8 @@ import { HealthBar } from '../ui'
 const attributes = {
   name: 'boss',
   type: 'humanoid',
-  experience: 4,
-  health: 10,
+  experience: 100,
+  health: 100,
   weight: 1,
   unstoppable: true,
   animations: [
@@ -21,7 +21,7 @@ const attributes = {
     attacks: [
       {
         name: 'attack',
-        damage: 2,
+        damage: 20,
         duration: 150,
         hitFrame: 60,
         cooldown: 15,

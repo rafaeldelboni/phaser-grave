@@ -10,7 +10,6 @@ export default class Actor {
     this.controls = {}
     this.states = []
     this.killCount = 0
-    this.experiencePoints = 0
     this.lastTargetHit = null
     this.dust = { start: () => {}, stop: () => {} }
     this.spark = { start: () => {}, stop: () => {} }
@@ -22,6 +21,8 @@ export default class Actor {
     this.name = attributes.name || ''
     this.weight = attributes.weight || 1
     this.experience = attributes.experience || 0
+    this.experiencePoints = attributes.experiencePoints || 0
+    this.experienceToNextLevel = attributes.experienceToNextLevel || 10
     this.unstoppable = attributes.unstoppable || false
     this.sprite.maxHealth = attributes.health
     this.sprite.setHealth(attributes.health)
