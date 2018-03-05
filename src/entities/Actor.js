@@ -27,7 +27,7 @@ export default class Actor {
     this.sprite.maxHealth = attributes.health
     this.sprite.setHealth(attributes.health)
 
-    this.initializeStates(States.addMultiple(this, attributes))
+    this.states = States.addMultiple(this, attributes)
   }
 
   _calculateStateTimes () {
@@ -66,10 +66,6 @@ export default class Actor {
       this.hitboxes.children.find(hitbox => hitbox.name === name) || {}
     hitbox.actor = this
     return hitbox
-  }
-
-  initializeStates (states) {
-    this.states = states
   }
 
   getState () {

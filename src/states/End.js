@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { Controls } from '../entities/helpers'
+import Controls from '../Controls'
 import { TextBox } from '../ui'
 
 export default class extends Phaser.State {

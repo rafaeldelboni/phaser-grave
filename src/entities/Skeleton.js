@@ -1,5 +1,6 @@
 import Actor from './Actor'
-import { Animations, Controls, Hitboxes } from './helpers'
+import Controls from '../Controls'
+import { Animations, Hitboxes } from './helpers'
 import { types as stateTypes } from './states'
 import { Dust, Bones } from '../particles'
 import { HealthBar } from '../ui'
