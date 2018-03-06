@@ -68,6 +68,11 @@ export default class Ai {
     const actorSprite = this.actor.sprite
     const playerSprite = this.player.sprite
 
+    if (this.actor.alive && actorSprite.body.checkWorldBounds()) {
+      this.actor.destroy()
+      return controls
+    }
+
     controls[this.actor.initialDirection] = true
 
     if (this.actor.lastTargetHit) {
@@ -80,10 +85,6 @@ export default class Ai {
 
     if (playerDistance <= this.attributes.ai.attackRange) {
       controls.attack = true
-    }
-
-    if (this.alive && actorSprite.body.checkWorldBounds()) {
-      this.actor.destroy()
     }
 
     return controls

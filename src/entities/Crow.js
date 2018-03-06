@@ -78,7 +78,7 @@ export default class Crow extends Actor {
   }
 
   _setupBody () {
-    this.sprite.body.setSize(0)
+    this.sprite.body.setSize(1)
     this.sprite.body.checkCollision.none = true
     this.hitboxes = Hitboxes.addMultiple(this.game, attributes.hitboxes)
     this.sprite.addChild(this.hitboxes)

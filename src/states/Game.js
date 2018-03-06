@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { Experience, Fence, Grave } from '../objects'
-import { Boss, Crow, Knight, Skeleton } from '../entities'
+import { Skeleton } from '../entities'
+import { Spawner } from './helpers'
 import { TextBox } from '../ui'
 import Audio from '../Audio'
 
@@ -86,12 +87,12 @@ export default class extends Phaser.State {
   }
 
   _cleanKilledEnemies () {
-    this.enemies = this.enemies.reduce((accumulator, current) => {
-      if (current.sprite.renderable) {
-        accumulator.push(current)
+    this.enemies.filter(enemy => !enemy.sprite.renderable).map(enemy => {
+      const index = this.enemies.indexOf(enemy)
+      if (index !== -1) {
+        this.enemies.splice(index, 1)
       }
-      return accumulator
-    }, [])
+    })
   }
 
   init () {
@@ -113,27 +114,12 @@ export default class extends Phaser.State {
       this.game,
       this.game.add.sprite(300, 123, 'atlas', '')
     )
+    this.spawner = new Spawner(this.game, this.player, this.enemies)
 
-    this.knight = new Knight(
-      this.game,
-      this.game.add.sprite(550, 123, 'atlas', ''),
-      this.player
-    )
-    this.enemies.push(this.knight)
-
-    this.crow = new Crow(
-      this.game,
-      this.game.add.sprite(450, 130, 'atlas', ''),
-      this.player
-    )
-    this.enemies.push(this.crow)
-
-    this.boss = new Boss(
-      this.game,
-      this.game.add.sprite(750, 105, 'atlas', ''),
-      this.player
-    )
-    this.enemies.push(this.boss)
+    this.spawner.enemy('knight', 1008)
+    this.spawner.enemy('knight', 608)
+    this.spawner.enemy('crow', 672)
+    this.spawner.enemy('crow', 1040)
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
@@ -184,6 +170,8 @@ export default class extends Phaser.State {
     this.hudCounter.update(
       `Kills: ${this.player.killCount}  Level: ${this.player.level.get()}`
     )
+
+    this.spawner.randomEnemy()
   }
 
   render () {
