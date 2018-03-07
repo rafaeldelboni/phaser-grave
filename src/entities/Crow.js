@@ -1,6 +1,7 @@
 import Actor from './Actor'
 import { Ai, Animations, Hitboxes } from './helpers'
 import { Feathers } from '../particles'
+import { getRandomArbitraryInt } from '../utils'
 
 const attributes = {
   name: 'crow',
@@ -19,7 +20,11 @@ const attributes = {
     }
   ],
   states: {
-    run: { speed: 100, archorX: 0.45, animation: 'crow' },
+    run: {
+      speed: getRandomArbitraryInt(50, 100),
+      archorX: 0.45,
+      animation: 'crow'
+    },
     attacks: [
       {
         name: 'crow',

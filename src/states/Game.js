@@ -114,12 +114,14 @@ export default class extends Phaser.State {
       this.game,
       this.game.add.sprite(300, 123, 'atlas', '')
     )
+
+    this.spawned = this.game.add.group(this.world, 'spawned')
     this.spawner = new Spawner(this.game, this.player, this.enemies)
 
-    this.spawner.enemy('knight', 1008)
-    this.spawner.enemy('knight', 608)
-    this.spawner.enemy('crow', 672)
-    this.spawner.enemy('crow', 1040)
+    this.spawner.enemy('knight', 1008, this.spawned)
+    this.spawner.enemy('knight', 608, this.spawned)
+    this.spawner.enemy('crow', 672, this.spawned)
+    this.spawner.enemy('crow', 1040, this.spawned)
 
     this.game.camera.setBoundsToWorld()
     this.game.camera.follow(
@@ -171,7 +173,7 @@ export default class extends Phaser.State {
       `Kills: ${this.player.killCount}  Level: ${this.player.level.get()}`
     )
 
-    this.spawner.randomEnemy()
+    this.spawner.randomEnemy(this.spawned)
   }
 
   render () {

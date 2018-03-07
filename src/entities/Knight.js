@@ -2,6 +2,7 @@ import Actor from './Actor'
 import { Ai, Animations, Hitboxes } from './helpers'
 import { Dust, Spark } from '../particles'
 import { HealthBar } from '../ui'
+import { getRandomArbitraryInt } from '../utils'
 
 const attributes = {
   name: 'knight',
@@ -20,7 +21,7 @@ const attributes = {
   ],
   states: {
     idle: { archorX: 0.5 },
-    run: { speed: 50, archorX: 0.45 },
+    run: { speed: getRandomArbitraryInt(30, 50), archorX: 0.45 },
     attacks: [
       {
         name: 'attack',
