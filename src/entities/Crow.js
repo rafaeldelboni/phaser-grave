@@ -69,12 +69,13 @@ export default class Crow extends Actor {
     )
     this._setupBody()
 
+    this.initialDirection =
+      this.sprite.x > this.player.sprite.x ? 'left' : 'right'
+
     this.feathers = new Feathers(this, 0, -5)
     this.controls = new Ai(this, player, attributes)
 
     this.playAnimation('crow', attributes.states.run.archorX)
-    this.initialDirection =
-      this.sprite.x > this.player.sprite.x ? 'left' : 'right'
   }
 
   _setupBody () {

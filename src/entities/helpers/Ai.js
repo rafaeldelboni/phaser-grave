@@ -68,12 +68,12 @@ export default class Ai {
     const actorSprite = this.actor.sprite
     const playerSprite = this.player.sprite
 
+    controls[this.actor.initialDirection] = true
+
     if (this.actor.alive && actorSprite.body.checkWorldBounds()) {
       this.actor.destroy()
       return controls
     }
-
-    controls[this.actor.initialDirection] = true
 
     if (this.actor.lastTargetHit) {
       controls.up = true

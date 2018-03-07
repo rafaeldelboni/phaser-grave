@@ -26,15 +26,16 @@ export default class Spawner {
   _chooseApplicableEnemyType () {
     let possibleEnemies = ['crow', 'crow', 'knight']
     if (this.player.killCount > 20 && !this._findEnemyByName('boss')) {
-      possibleEnemies.concat(['knight', 'boss'])
+      possibleEnemies = possibleEnemies.concat(['knight', 'boss'])
     }
+
     return choose(possibleEnemies)
   }
 
   _chooseApplicableEnemyPositionX () {
     let enemyPosX = getRandomArbitraryInt(ROOM_START_X, ROOM_END_X)
     // TODO refator this
-    while (Phaser.Math.distance(enemyPosX, 0, this.player.sprite.x, 0) < 250) {
+    while (Phaser.Math.distance(enemyPosX, 0, this.player.sprite.x, 0) < 300) {
       enemyPosX = getRandomArbitraryInt(ROOM_START_X, ROOM_END_X)
     }
     return enemyPosX
