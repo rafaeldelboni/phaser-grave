@@ -1,5 +1,7 @@
 import { types as stateTypes } from '../states'
 
+const ROOM_WIDTH = 1280
+
 export default class Ai {
   constructor (actor, player, attributes) {
     this.actor = actor
@@ -70,7 +72,10 @@ export default class Ai {
 
     controls[this.actor.initialDirection] = true
 
-    if (this.actor.alive && actorSprite.body.checkWorldBounds()) {
+    if (
+      this.actor.alive &&
+      (actorSprite.y < 0 || actorSprite.x < 0 || actorSprite.x > ROOM_WIDTH)
+    ) {
       this.actor.destroy()
       return controls
     }

@@ -33,9 +33,19 @@ export default class extends Phaser.State {
     this.game.scale.forceLandscape = true
     this.game.scale.pageAlignHorizontally = true
     this.game.scale.pageAlignVertically = true
-    this.game.scale.setMinMax(config.width, config.height, 960, 540)
+    this.game.scale.setMinMax(
+      config.width,
+      config.height,
+      config.maxWidth,
+      config.maxHeight
+    )
     this.game.scale.setResizeCallback(() => {
-      this.game.scale.setMinMax(config.width, config.height, 960, 540)
+      this.game.scale.setMinMax(
+        config.width,
+        config.height,
+        config.maxWidth,
+        config.maxHeight
+      )
     })
   }
 
