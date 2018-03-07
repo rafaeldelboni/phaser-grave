@@ -33,8 +33,6 @@ export default class Attack extends State {
       )
       if (this.current.audioMiss && !colided) {
         this.actor.game.audio.sfx[this.current.audioMiss].play()
-      } else if (this.current.audioHit && colided) {
-        this.actor.game.audio.sfx[this.current.audioHit].play()
       }
     }
   }

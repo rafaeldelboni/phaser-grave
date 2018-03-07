@@ -34,6 +34,10 @@ export default class Hit extends State {
     this.actor.game.camera.shake(0.01 * attack.shake, 100 * attack.shake)
     this.actor.spark.start()
     this.actor.dust.start()
+
+    if (this.attack.audioHit) {
+      this.actor.game.audio.sfx[this.attack.audioHit].play()
+    }
   }
 
   stop () {

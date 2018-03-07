@@ -87,7 +87,6 @@ export default class Crow extends Actor {
 
   update (targets) {
     super.update()
-    console.log(this.sprite.x, this.sprite.y)
     this.targets = targets
   }
 
