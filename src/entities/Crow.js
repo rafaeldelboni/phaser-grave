@@ -1,6 +1,6 @@
 import Actor from './Actor'
 import { Ai, Animations, Hitboxes } from './helpers'
-import { Feathers } from '../particles'
+import { Confetti, Feathers } from '../particles'
 import { getRandomArbitraryInt } from '../utils'
 
 const attributes = {
@@ -78,6 +78,7 @@ export default class Crow extends Actor {
       this.sprite.x > this.player.sprite.x ? 'left' : 'right'
 
     this.feathers = new Feathers(this, 0, -5)
+    this.confetti = new Confetti(this, 0, -5)
     this.controls = new Ai(this, player, attributes)
 
     this.playAnimation('crow', attributes.states.run.archorX)

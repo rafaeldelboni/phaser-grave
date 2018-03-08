@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import { State, types } from './'
 import { Experience } from '../../../objects'
+import { getRandomArbitraryInt } from '../../../utils'
 
 export default class Die extends State {
   constructor (actor, die) {
@@ -24,7 +25,12 @@ export default class Die extends State {
         this.actor.bones.start()
         break
       case 'feathers':
-        this.actor.feathers.start()
+        const normalParticle = getRandomArbitraryInt(0, 9)
+        if (normalParticle) {
+          this.actor.feathers.start()
+        } else {
+          this.actor.confetti.start()
+        }
         break
     }
     this._destroy()
