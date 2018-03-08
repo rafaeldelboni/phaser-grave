@@ -56,4 +56,4 @@ Boostrap: https://github.com/lean/phaser-es6-webpack
 
 Inspiration: https://github.com/petarov/game-off-2017
 
-[badge-status]: https://img.shields.io/badge/status-work%20in%20progress-lightgrey.svg
+[badge-status]: https://img.shields.io/badge/status-done-green.svg
